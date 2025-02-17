@@ -135,6 +135,7 @@ def save_checkpoint(queue, args):
                 '--save', args.save_dir,
                 '--ckpt-format', 'torch', # only 'torch' supported for conversion
                 '--no-one-logger',
+                'data-parallel-size', '1'
                 ]
 
     if md.make_vocab_size_divisible_by is not None:
