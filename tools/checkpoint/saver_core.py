@@ -204,7 +204,8 @@ def save_checkpoint(queue, args):
     margs.tokenizer_model = None
     margs.transformer_impl = args.saver_transformer_impl
 
-    # set_global_variables(margs, build_tokenizer=False)
+    set_global_variables(margs, build_tokenizer=False)
+    # set_args(args)
 
     # Megatron args. (i.e., 'margs')
     margs = get_args()
