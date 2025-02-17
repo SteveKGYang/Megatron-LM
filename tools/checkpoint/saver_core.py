@@ -134,8 +134,7 @@ def save_checkpoint(queue, args):
                 '--save-interval', '1',
                 '--save', args.save_dir,
                 '--ckpt-format', 'torch', # only 'torch' supported for conversion
-                '--no-one-logger',
-                'data-parallel-size', '1'
+                '--no-one-logger'
                 ]
 
     if md.make_vocab_size_divisible_by is not None:
@@ -193,7 +192,7 @@ def save_checkpoint(queue, args):
         if margs.num_experts > 1 and args.target_tensor_parallel_size > 1:
             margs.sequence_parallel = True
 
-    # validate_args(margs)
+    validate_args(margs)
 
     # Use M-core models & unset loaded paths.
     margs.use_legacy_models = False
@@ -206,8 +205,7 @@ def save_checkpoint(queue, args):
     margs.transformer_impl = args.saver_transformer_impl
 
     set_global_variables(margs, build_tokenizer=False)
-    # set_args(args)
-
+    
     # Megatron args. (i.e., 'margs')
     margs = get_args()
 

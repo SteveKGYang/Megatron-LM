@@ -792,9 +792,9 @@ def validate_args(args, defaults={}):
               ' Use --ckpt-format to select the checkpoint format.')
 
     # Inference args
-    if args.inference_batch_times_seqlen_threshold > -1:
-        assert args.pipeline_model_parallel_size > 1, \
-            "--inference-batch-times-seqlen-threshold requires setting --pipeline-model-parallel-size > 1."
+    # if args.inference_batch_times_seqlen_threshold > -1:
+    #     assert args.pipeline_model_parallel_size > 1, \
+    #         "--inference-batch-times-seqlen-threshold requires setting --pipeline-model-parallel-size > 1."
 
     # MoE upcycling check
     if args.moe_use_upcycling:
