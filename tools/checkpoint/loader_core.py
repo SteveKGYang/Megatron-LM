@@ -77,7 +77,7 @@ def _load_checkpoint(queue, args):
                 '--max-position-embeddings', '4096',
                 '--disable-bias-linear',
                 '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
-                '--tokenizer-type', 'HuggingFaceTokenizer'
+                '--tokenizer-type', 'HuggingFaceTokenizer',
                 '--tensor-model-parallel-size', '4'
                 ]
 
