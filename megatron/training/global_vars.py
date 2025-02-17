@@ -92,7 +92,7 @@ def set_global_variables(args, build_tokenizer=True):
     if build_tokenizer:
         _ = _build_tokenizer(args)
     _set_tensorboard_writer(args)
-    _set_wandb_writer(args)
+    # _set_wandb_writer(args)
     _set_one_logger(args)
     _set_adlr_autoresume(args)
     _set_timers(args)
