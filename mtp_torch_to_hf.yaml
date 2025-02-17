@@ -1,5 +1,5 @@
 protocolVersion: 2
-name: dcp_2_torch_new
+name: mtp_torch_to_hf
 type: job
 jobRetryCount: 0
 prerequisites:
@@ -53,9 +53,9 @@ taskRoles:
       - export NODE_RANK=$PAI_CURRENT_TASK_ROLE_CURRENT_TASK_INDEX
       - 'export LD_LIBRARY_PATH=/opt/hpcx/ucx/lib:$LD_LIBRARY_PATH'
       # - echo "Copy data"
-      # - mkdir /scratch/
-      # - mkdir /scratch/proof_pile_2-algebraic_stack
-      # - chmod 777 /scratch/proof_pile_2-algebraic_stack
+      - mkdir /scratch/
+      - mkdir /scratch/torch_model
+      - chmod 777 /scratch/torch_model
       # - mkdir /scratch/proof_pile_2-open_web_math
       # - chmod 777 /scratch/proof_pile_2-open_web_math
       # - mkdir /scratch/redpajama-arxiv
@@ -69,9 +69,13 @@ taskRoles:
       # - mkdir /scratch/pes2o
       # - chmod 777 /scratch/pes2o
       # - bash copy_dataset_olmo2.sh
+      - LOAD_DIR = "/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_0215/"
+      - TARGET_DIR = "/mnt/pvc-blob-nfs/klyang/hf_converted_model/llama_3B_data_evaluation_dclm_0215/checkpoint-48000/"
       - echo "Start converting..."
-      - python tools/checkpoint/convert.py --loader core --saver core --model-type GPT --position-embedding-type rope --load-dir /mnt/pvc-blob-nfs/klyang/tuning_result/olmo2_replicate_0207_format_torch/torch/ --save-dir /mnt/pvc-blob-nfs/klyang/converted_model/ --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
-      # - python tools/checkpoint/convert.py --loader core --saver core --model-type GPT --position-embedding-type rope --load-dir /home/pretraining/klyang/mount_dir/eu_mount/torch --save-dir ./converted_model/ --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
+      - python tools/checkpoint/convert.py --loader core --model-type GPT --position-embedding-type rope --load-dir $LOAD_DIR --save-dir /scratch/torch_model --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
+      - python weights_conversion/megatron_to_hf.py --input_dir /scratch/torch_model --num_output_shards 1 --output_dir $TARGET_DIR
+      - PATTERN="tokenizer*.json"
+      - cp /mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k/$PATTERN $TARGET_DIR
       - echo "End converting..."
 defaults:
   virtualCluster: default

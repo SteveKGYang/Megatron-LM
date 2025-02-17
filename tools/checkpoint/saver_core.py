@@ -131,7 +131,6 @@ def save_checkpoint(queue, args):
                 '--no-save-optim',
                 '--no-save-rng',
                 '--no-initialization',
-                '--no-one-logger',
                 '--save-interval', '1',
                 '--save', args.save_dir,
                 '--ckpt-format', 'torch', # only 'torch' supported for conversion
