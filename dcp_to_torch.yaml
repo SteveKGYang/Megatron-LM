@@ -71,7 +71,7 @@ taskRoles:
       # - bash copy_dataset_olmo2.sh
       - echo "Start converting..."
       - python tools/checkpoint/convert.py --loader core --saver core --model-type GPT --position-embedding-type rope --load-dir /mnt/pvc-blob-nfs/klyang/tuning_result/olmo2_replicate_0207_format_torch/torch/ --save-dir /mnt/pvc-blob-nfs/klyang/converted_model/ --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
-      - python tools/checkpoint/convert.py --loader core --saver core --model-type GPT --position-embedding-type rope --load-dir /home/pretraining/klyang/mount_dir/eu_mount/torch --save-dir ./converted_model/ --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
+      # - python tools/checkpoint/convert.py --loader core --saver core --model-type GPT --position-embedding-type rope --load-dir /home/pretraining/klyang/mount_dir/eu_mount/torch --save-dir ./converted_model/ --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
       - echo "End converting..."
 defaults:
   virtualCluster: default

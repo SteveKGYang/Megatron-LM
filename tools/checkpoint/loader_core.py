@@ -78,6 +78,7 @@ def _load_checkpoint(queue, args):
                 '--disable-bias-linear',
                 '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
                 '--tokenizer-type', 'HuggingFaceTokenizer'
+                '--tensor-model-parallel-size', '4'
                 ]
 
     margs = parse_args()
@@ -251,6 +252,7 @@ def _load_checkpoint(queue, args):
 
     # Get first pipe stage.
     mpu.set_pipeline_model_parallel_rank(0)
+    print("tp_size:{}".format(tp_size))
     all_models = [get_models(tp_size, md.params_dtype)]
     models = all_models[0][0]
 
