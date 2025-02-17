@@ -69,8 +69,8 @@ taskRoles:
       # - mkdir /scratch/pes2o
       # - chmod 777 /scratch/pes2o
       # - bash copy_dataset_olmo2.sh
-      - LOAD_DIR = "/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_0215/"
-      - TARGET_DIR = "/mnt/pvc-blob-nfs/klyang/hf_converted_model/llama_3B_data_evaluation_dclm_0215/checkpoint-48000/"
+      - LOAD_DIR="/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_0215/"
+      - TARGET_DIR="/mnt/pvc-blob-nfs/klyang/hf_converted_model/llama_3B_data_evaluation_dclm_0215/checkpoint-48000/"
       - echo "Start converting..."
       - python tools/checkpoint/convert.py --loader core --model-type GPT --position-embedding-type rope --load-dir $LOAD_DIR --save-dir /scratch/torch_model --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
       - python weights_conversion/megatron_to_hf.py --input_dir /scratch/torch_model --num_output_shards 1 --output_dir $TARGET_DIR
