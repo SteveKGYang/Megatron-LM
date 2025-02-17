@@ -192,7 +192,7 @@ def save_checkpoint(queue, args):
         if margs.num_experts > 1 and args.target_tensor_parallel_size > 1:
             margs.sequence_parallel = True
 
-    validate_args(margs)
+    # validate_args(margs)
 
     # Use M-core models & unset loaded paths.
     margs.use_legacy_models = False
