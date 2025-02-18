@@ -25,7 +25,7 @@ def add_arguments(parser):
                        default='learned_absolute',
                        choices=['learned_absolute', 'rope'],
                        help='Position embedding type.')
-    group.add_argument('--loader-transformer-impl', default='transformer_engine',
+    group.add_argument('--loader-transformer-impl', default='local',
                        choices=['local', 'transformer_engine'],
                        help='Which Transformer implementation to use.')
 
