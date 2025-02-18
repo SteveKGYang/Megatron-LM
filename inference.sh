@@ -24,4 +24,4 @@ torchrun --nproc-per-node=8 gpt_batch_inference.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]} \
-    --prompts "Once upon a time"
+    --prompts "An example run script is shown below."
