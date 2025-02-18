@@ -397,6 +397,7 @@ def validate_args(args, defaults={}):
                     'Number of layers should be divisible by the pipeline-model-parallel size'
 
     print("Virtual model parallel size ", args.virtual_pipeline_model_parallel_size)
+    args.overlap_param_gather = False
     if args.overlap_param_gather:
         assert args.use_distributed_optimizer, \
             '--overlap-param-gather only supported with distributed optimizer'
