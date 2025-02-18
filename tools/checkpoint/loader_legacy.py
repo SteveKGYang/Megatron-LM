@@ -67,6 +67,14 @@ def _load_checkpoint(queue, args):
                 '--position-embedding-type', args.position_embedding_type,
                 '--exit-on-missing-checkpoint',
                 '--no-one-logger',
+                '--num-layers', '24',
+                '--hidden-size', '2048',
+                '--num-attention-heads', '16',
+                '--max-position-embeddings', '2048',
+                '--disable-bias-linear',
+                '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
+                '--tokenizer-type', 'HuggingFaceTokenizer',
+                '--tensor-model-parallel-size', '1'
                 ]
 
     margs = parse_args()
