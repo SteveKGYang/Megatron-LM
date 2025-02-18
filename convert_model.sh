@@ -1,5 +1,5 @@
 #!/bin/bash
-LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_0215/iter_0045000/'
+LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/temp/'
 TARGET_DIR='/mnt/pvc-blob-nfs/klyang/hf_converted_model/llama_3B_data_evaluation_dclm_0215/checkpoint-45000/'
 
 PATTERN="tokenizer*.json"
