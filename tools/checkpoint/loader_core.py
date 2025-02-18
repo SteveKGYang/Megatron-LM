@@ -25,7 +25,7 @@ def add_arguments(parser):
                        default='learned_absolute',
                        choices=['learned_absolute', 'rope'],
                        help='Position embedding type.')
-    group.add_argument('--loader-transformer-impl', default='local',
+    group.add_argument('--loader-transformer-impl', default='transformer_engine',
                        choices=['local', 'transformer_engine'],
                        help='Which Transformer implementation to use.')
 
@@ -79,14 +79,14 @@ def _load_checkpoint(queue, args):
                 # '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
                 # '--tokenizer-type', 'HuggingFaceTokenizer',
                 # '--tensor-model-parallel-size', '4'
-                '--num-layers', '24',
-                '--hidden-size', '2048',
-                '--num-attention-heads', '16',
-                '--max-position-embeddings', '2048',
+                '--num-layers', '32',
+                '--hidden-size', '4096',
+                '--num-attention-heads', '32',
+                '--max-position-embeddings', '8192',
                 '--disable-bias-linear',
                 '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
                 '--tokenizer-type', 'HuggingFaceTokenizer',
-                '--tensor-model-parallel-size', '1'
+                '--tensor-model-parallel-size', '4'
                 ]
 
     margs = parse_args()

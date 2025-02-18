@@ -1,6 +1,6 @@
 #!/bin/bash
-LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/ruizhe_test/'
-TARGET_DIR='/mnt/pvc-blob-nfs/klyang/hf_converted_model/ruizhe_test/checkpoint-100000/'
+LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/olmo2_replicate_0207_format_torch/torch/'
+TARGET_DIR='/mnt/pvc-blob-nfs/klyang/hf_converted_model/olmo2_replicate_0207_format_torch/checkpoint-187000/'
 
 PATTERN="tokenizer*.json"
 
