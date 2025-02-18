@@ -9,7 +9,7 @@ MODEL_ARGS=(
     --use-checkpoint-args
     --use-mcore-models
     --tensor-model-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid/
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_core/
 )
 
 INFERENCE_SPECIFIC_ARGS=(
@@ -20,7 +20,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --temperature 0
 )
 
-torchrun --nproc-per-node=8 gpt_batch_inference.py \
+torchrun --nproc-per-node=1 gpt_batch_inference.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]} \
