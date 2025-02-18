@@ -70,23 +70,23 @@ def _load_checkpoint(queue, args):
                 '--position-embedding-type', args.position_embedding_type,
                 '--exit-on-missing-checkpoint',
                 '--no-one-logger',
-                # '--num-layers', '32',
-                # '--hidden-size', '2560',
-                # '--ffn-hidden-size', '10240',
-                # '--num-attention-heads', '32',
-                # '--max-position-embeddings', '4096',
-                # '--disable-bias-linear',
-                # '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
-                # '--tokenizer-type', 'HuggingFaceTokenizer',
-                # '--tensor-model-parallel-size', '4'
                 '--num-layers', '32',
-                '--hidden-size', '4096',
+                '--hidden-size', '2560',
+                '--ffn-hidden-size', '10240',
                 '--num-attention-heads', '32',
-                '--max-position-embeddings', '8192',
+                '--max-position-embeddings', '4096',
                 '--disable-bias-linear',
                 '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
                 '--tokenizer-type', 'HuggingFaceTokenizer',
                 '--tensor-model-parallel-size', '4'
+                # '--num-layers', '32',
+                # '--hidden-size', '4096',
+                # '--num-attention-heads', '32',
+                # '--max-position-embeddings', '8192',
+                # '--disable-bias-linear',
+                # '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
+                # '--tokenizer-type', 'HuggingFaceTokenizer',
+                # '--tensor-model-parallel-size', '4'
                 ]
 
     margs = parse_args()
