@@ -9,7 +9,7 @@ MODEL_ARGS=(
     --use-checkpoint-args
     --use-mcore-models
     --tensor-model-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_core/
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_core_from_legacy/
 )
 
 INFERENCE_SPECIFIC_ARGS=(
