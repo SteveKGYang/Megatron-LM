@@ -41,6 +41,7 @@ taskRoles:
       - ls -alh .
       - echo "Prepare other envs"
       - pip install transformers
+      - pip install deepspeed
       - pip install h5py
       - pip install wandb
       - pip install lm_eval
