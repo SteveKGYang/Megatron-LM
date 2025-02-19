@@ -20,8 +20,8 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 12
-    --results-path /mnt/pvc-blob-nfs/klyang
+    --micro-batch-size 4
+    --results-path /mnt/pvc-blob-nfs/klyang/results_mmlu_h100.json
 )
 
 # torchrun --nproc-per-node=4 evaluate.py \
