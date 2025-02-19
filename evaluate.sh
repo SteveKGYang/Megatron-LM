@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+# export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 TOKENIZER_ARGS=(
@@ -13,7 +13,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_core_from_legacy
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_core
     # --load /home/pretraining/klyang/mount_dir/eu_mount/llama_3B_data_evaluation_finewebedu_0214_mid
 )
 
@@ -24,12 +24,12 @@ INFERENCE_SPECIFIC_ARGS=(
     --results-path /mnt/pvc-blob-nfs/klyang
 )
 
-# torchrun --nproc-per-node=1 evaluate.py \
-#     ${TOKENIZER_ARGS[@]} \
-#     ${MODEL_ARGS[@]} \
-#     ${INFERENCE_SPECIFIC_ARGS[@]}
-
-accelerate launch evaluate.py \
+torchrun --nproc-per-node=1 evaluate.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]}
+
+# accelerate launch evaluate.py \
+#     ${TOKENIZER_ARGS[@]} \
+#     ${MODEL_ARGS[@]} \
+#     ${INFERENCE_SPECIFIC_ARGS[@]}
