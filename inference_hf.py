@@ -7,11 +7,11 @@ def load_model(model_name: str, device: str = "cuda" if torch.cuda.is_available(
     model = AutoModelForCausalLM.from_pretrained(model_name).to(device)
     return model, tokenizer, device
 
-def generate_text(model, tokenizer, device, prompt: str, max_length: int = 100):
+def generate_text(model, tokenizer, device, prompt: str, max_length: int = 512):
     """使用模型生成文本"""
     inputs = tokenizer(prompt, return_tensors="pt").to(device)
     with torch.no_grad():
-        output = model.generate(**inputs, max_length=max_length, do_sample=True, top_p=0.95, temperature=0.7)
+        output = model.generate(**inputs, max_length=max_length, do_sample=False, temperature=0.)
     return tokenizer.decode(output[0], skip_special_tokens=True)
 
 if __name__ == "__main__":
