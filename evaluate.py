@@ -561,14 +561,14 @@ def main():
     # results = lm_eval.evaluator.evaluate(adaptor, task_dict, False, args.num_fewshot, None)
     
     #!
-    if args.msamp:
-        from megatron.core import tensor_parallel
-        tensor_parallel.linear_with_grad_accumulation_and_async_allreduce.permit_fp4_computation = True     # todo 这里只需要把这个属性设置下就行，否则会报错找不到这个属性
-        
+    # if args.msamp:
+    #     from megatron.core import tensor_parallel
+    #     tensor_parallel.linear_with_grad_accumulation_and_async_allreduce.permit_fp4_computation = True     # todo 这里只需要把这个属性设置下就行，否则会报错找不到这个属性
+    
     results = lm_eval.simple_evaluate(
         model=adaptor, 
         tasks=task_list, 
-        num_fewshot=0
+        num_fewshot=5
     )
     
     print(results)
