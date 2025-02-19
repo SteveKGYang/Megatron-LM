@@ -515,6 +515,7 @@ def tasks_args(parser):
                        help='Should the sequence length be adapted to the batch during evaluation, if in fp16 the results will be slightly different due to numerical errors but greatly speed up evaluation.')
     group.add_argument('--num-fewshot', type=int, default = 0, help='Number of few-shot prompts.')
     group.add_argument('--eval-fp32',  default = False, action='store_true', help='Should the evaluation run in fp32')
+    group.add_argument('--trust-remote-code', action='store_true')
     return parser
 
 # from megatron.arguments import parse_args
@@ -554,6 +555,11 @@ def main():
             args.curriculum_learning_legacy = 1
 
     # task_list = ALL_TASKS if args.task_list == 'all' else args.task_list.split(',')
+
+    if args.trust_remote_code:
+        import datasets
+        datasets.config.HF_DATASETS_TRUST_REMOTE_CODE = True
+
     task_list = args.task_list.split(',')
     print(f"task_list: {task_list}")
     task_dict = lm_eval.tasks.get_task_dict(task_list)
