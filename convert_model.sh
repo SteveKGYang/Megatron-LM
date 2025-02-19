@@ -1,6 +1,6 @@
 #!/bin/bash
-LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid/'
-TARGET_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_hf/'
+LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_0215/'
+TARGET_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_0215_tp1_core/'
 
 PATTERN="tokenizer*.json"
 
