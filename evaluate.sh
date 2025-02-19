@@ -26,12 +26,12 @@ INFERENCE_SPECIFIC_ARGS=(
     --results-path /mnt/pvc-blob-nfs/klyang
 )
 
-torchrun --nproc-per-node=4 evaluate.py \
-    ${TOKENIZER_ARGS[@]} \
-    ${MODEL_ARGS[@]} \
-    ${INFERENCE_SPECIFIC_ARGS[@]}
-
-# accelerate launch evaluate.py \
+# torchrun --nproc-per-node=4 evaluate.py \
 #     ${TOKENIZER_ARGS[@]} \
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
+
+accelerate launch evaluate.py \
+    ${TOKENIZER_ARGS[@]} \
+    ${MODEL_ARGS[@]} \
+    ${INFERENCE_SPECIFIC_ARGS[@]}

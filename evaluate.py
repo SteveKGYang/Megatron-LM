@@ -57,11 +57,15 @@ try:
     deepspeed_available = True
 except ImportError:
     deepspeed_available = False
+
+from accelerate import Accelerator, InitProcessGroupKwargs
+from datetime import timedelta
     
 
 class EvalHarnessAdaptor(lm_eval.api.model.LM):
-    def __init__(self, model, tokenizer):
+    def __init__(self, model, tokenizer, accelerator):
         args = get_args()
+        self.accelerator = accelerator
         self.args = args
         self.model = model
         self.tokenizer = tokenizer
@@ -518,6 +522,9 @@ def tasks_args(parser):
 
 def main():
     start = time.time()
+
+    process_group_kwargs = InitProcessGroupKwargs(timeout=timedelta(seconds=7200))
+    accelerator = Accelerator(kwargs_handlers=[process_group_kwargs])
     
     print(f"Deepspeed_available: {deepspeed_available}")
     if deepspeed_available:
@@ -558,7 +565,7 @@ def main():
     model.fwd_outputs = []
 
     tokenizer = get_tokenizer()
-    adaptor = EvalHarnessAdaptor(model, tokenizer)
+    adaptor = EvalHarnessAdaptor(model, tokenizer, accelerator)
     # results = lm_eval.evaluator.evaluate(adaptor, task_dict, False, args.num_fewshot, None)
     
     #!
