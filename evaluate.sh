@@ -1,5 +1,5 @@
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-# export CUDA_DEVICE_MAX_CONNECTIONS=1
+export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 TOKENIZER_ARGS=(
     --tokenizer-model /mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k
