@@ -505,11 +505,11 @@ def load_ds_checkpoint_and_setup_megatron(extra_args_provider):
 def tasks_args(parser):
     """Provide extra arguments required for tasks."""
     group = parser.add_argument_group(title='Evaluation options')
-    group.add_argument('--task-list', type=str, default = "mmlu", help='Either "all" or comma separated list of tasks.')
+    group.add_argument('--task-list', type=str, default = "hellaswag", help='Either "all" or comma separated list of tasks.')
     group.add_argument('--results-path', type=str, default = "./results.json", help='Path to where the results will be stored.')
     group.add_argument('--adaptive-seq-len',  default = False, action='store_true',
                        help='Should the sequence length be adapted to the batch during evaluation, if in fp16 the results will be slightly different due to numerical errors but greatly speed up evaluation.')
-    group.add_argument('--num-fewshot', type=int, default = 5, help='Number of few-shot prompts.')
+    group.add_argument('--num-fewshot', type=int, default = 0, help='Number of few-shot prompts.')
     group.add_argument('--eval-fp32',  default = False, action='store_true', help='Should the evaluation run in fp32')
     return parser
 
@@ -568,7 +568,7 @@ def main():
     results = lm_eval.simple_evaluate(
         model=adaptor, 
         tasks=task_list, 
-        num_fewshot=5
+        num_fewshot=args.num_fewshot
     )
     
     print(results)
