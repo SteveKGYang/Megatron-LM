@@ -13,7 +13,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_0215_tp1_core
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_core
     # --load /home/pretraining/klyang/mount_dir/eu_mount/llama_3B_data_evaluation_finewebedu_0214_mid
 )
 
