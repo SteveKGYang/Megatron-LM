@@ -146,7 +146,6 @@ def main():
             'no_load_optim': True,
             'micro_batch_size': 1,
             'exit_on_missing_checkpoint': True,
-            'tokenizer_model': '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k'
         },
     )
 
