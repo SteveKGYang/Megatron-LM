@@ -108,11 +108,11 @@ def _load_checkpoint(queue, args):
                 '--tokenizer-type', 'HuggingFaceTokenizer',
                 '--tensor-model-parallel-size', '4',
                 '--pipeline-model-parallel-size', '5',
-                '--decoder-first-pipeline-num-layers', '4',
-                '--decoder-last-pipeline-num-layers', '4',
-                '--context-parallel-size', '1',
-                '--expert-model-parallel-size', '4',
-                '--expert-tensor-parallel-size', '1'
+                # '--decoder-first-pipeline-num-layers', '4',
+                # '--decoder-last-pipeline-num-layers', '4',
+                # '--context-parallel-size', '1',
+                # '--expert-model-parallel-size', '4',
+                # '--expert-tensor-parallel-size', '1'
                 ]
 
     margs = parse_args()
