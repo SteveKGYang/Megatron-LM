@@ -8,6 +8,7 @@ TOKENIZER_ARGS=(
 MODEL_ARGS=(
     --use-checkpoint-args
     --use-mcore-models
+    --num-layers 32
     --tensor-model-parallel-size 4
     --pipeline-model-parallel-size 5
     --expert-model-parallel-size 4
