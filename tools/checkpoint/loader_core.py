@@ -91,7 +91,7 @@ def _load_checkpoint(queue, args):
                 '--moe-shared-expert-overlap',
                 '--moe-grouped-gemm',
                 '--moe-router-load-balancing-type', 'seq_aux_loss',
-                '--moe-router-score-function', 'sigmoid'
+                '--moe-router-score-function', 'sigmoid',
                 '--moe-router-topk', '4',
                 '--moe-router-topk-limited-devices', '4',
                 '--moe-router-topk-scaling-factor', '2.5',
