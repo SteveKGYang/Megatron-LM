@@ -15,6 +15,7 @@ MODEL_ARGS=(
     --decoder-last-pipeline-num-layers 4
     --context-parallel-size 1
     --expert-tensor-parallel-size 1
+    --bf16
     --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/
 )
 
