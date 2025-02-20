@@ -20,7 +20,7 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 4
+    --micro-batch-size 12
     --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_dclm.json
     --trust-remote-code
 )
