@@ -8,7 +8,6 @@ TOKENIZER_ARGS=(
 MODEL_ARGS=(
     --use-checkpoint-args
     --use-mcore-models
-    --num-layers 32
     --tensor-model-parallel-size 4
     --pipeline-model-parallel-size 5
     --expert-model-parallel-size 4
@@ -16,7 +15,7 @@ MODEL_ARGS=(
     --decoder-last-pipeline-num-layers 4
     --context-parallel-size 1
     --expert-tensor-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test_tp1_core/
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/
 )
 
 INFERENCE_SPECIFIC_ARGS=(
