@@ -9,6 +9,8 @@ MODEL_ARGS=(
     --use-checkpoint-args
     --use-mcore-models
     --tensor-model-parallel-size 4
+    --pipeline-model-parallel-size 5
+    --expert-model-parallel-size 4
     --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test_tp1_core/
 )
 
@@ -20,7 +22,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --temperature 0
 )
 
-torchrun --nproc-per-node=1 gpt_batch_inference.py \
+torchrun --nproc-per-node=20 gpt_batch_inference.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]} \
