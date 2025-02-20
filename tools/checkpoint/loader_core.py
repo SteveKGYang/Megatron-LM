@@ -93,7 +93,6 @@ def _load_checkpoint(queue, args):
                 '--moe-router-load-balancing-type', 'seq_aux_loss',
                 '--moe-router-score-function', 'sigmoid',
                 '--moe-router-topk', '4',
-                '--moe-router-topk-limited-devices', '4',
                 '--moe-router-topk-scaling-factor', '2.5',
                 '--moe-router-enable-expert-bias',
                 '--moe-router-bias-update-rate', '0.001',
