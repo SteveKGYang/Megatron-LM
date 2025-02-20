@@ -12,6 +12,10 @@ MODEL_ARGS=(
     --tensor-model-parallel-size 4
     --pipeline-model-parallel-size 5
     --expert-model-parallel-size 4
+    --decoder-first-pipeline-num-layers 4
+    --decoder-last-pipeline-num-layers 4
+    --context-parallel-size 1
+    --expert-tensor-parallel-size 1
     --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test_tp1_core/
 )
 
