@@ -43,7 +43,7 @@ storage:
   #   mount_dir: /mnt/pretrain
 
 jobs:
-- name: megatron_evaluation_dclm
+- name: megatron_evaluation_olmo
   sku: 1xG8-H100-IB
   # sla_tier: Standard
   sla_tier: Premium

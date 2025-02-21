@@ -76,9 +76,9 @@ def _load_checkpoint(queue, args):
                 # '--num-attention-heads', '32',
                 # '--max-position-embeddings', '4096',
                 # '--disable-bias-linear',
-                '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
-                '--tokenizer-type', 'HuggingFaceTokenizer',
-                '--tensor-model-parallel-size', '4'
+                # '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
+                # '--tokenizer-type', 'HuggingFaceTokenizer',
+                # '--tensor-model-parallel-size', '4'
 
                 # '--num-layers', '32',
                 # '--hidden-size', '2048',
@@ -105,14 +105,14 @@ def _load_checkpoint(queue, args):
                 # '--v-head-dim', '128',
                 # '--rotary-scaling-factor', '40',
                 # '--qk-layernorm',
-                # '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
-                # '--tokenizer-type', 'HuggingFaceTokenizer',
-                # '--tensor-model-parallel-size', '4',
-                # '--pipeline-model-parallel-size', '5',
-                # '--decoder-first-pipeline-num-layers', '4',
-                # '--decoder-last-pipeline-num-layers', '4',
+                '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
+                '--tokenizer-type', 'HuggingFaceTokenizer',
+                '--tensor-model-parallel-size', '4',
+                '--pipeline-model-parallel-size', '5',
+                '--decoder-first-pipeline-num-layers', '4',
+                '--decoder-last-pipeline-num-layers', '4',
                 # '--context-parallel-size', '1',
-                # '--expert-model-parallel-size', '4',
+                '--expert-model-parallel-size', '4',
                 # '--expert-tensor-parallel-size', '1'
                 ]
 

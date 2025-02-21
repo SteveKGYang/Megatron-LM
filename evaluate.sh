@@ -16,7 +16,7 @@ MODEL_ARGS=(
     --bf16
     --tensor-model-parallel-size 1
     # --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_core
-    --load /mnt/mydata/klyang/llama_3B_data_evaluation_dclm_0215_tp1_core
+    --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
 )
 
 INFERENCE_SPECIFIC_ARGS=(
@@ -24,10 +24,10 @@ INFERENCE_SPECIFIC_ARGS=(
     --hidden-dropout 0.0
     --micro-batch-size 8
     # --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_dclm.json
-    --results-path /mnt/mydata/klyang/results_llama3B_dclm_mmlu.json
-    # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-    --task-list mmlu
-    --num-fewshot 5
+    --results-path /mnt/mydata/klyang/results_olmo_replicate.json
+    --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
+    # --task-list mmlu
+    --num-fewshot 0
     --trust-remote-code
 )
 
