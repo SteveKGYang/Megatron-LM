@@ -112,7 +112,7 @@ def _load_checkpoint(queue, args):
                 '--decoder-first-pipeline-num-layers', '4',
                 '--decoder-last-pipeline-num-layers', '4',
                 # '--context-parallel-size', '1',
-                '--expert-model-parallel-size', '1',
+                '--expert-model-parallel-size', '4',
                 '--expert-tensor-parallel-size', '1'
                 ]
 
