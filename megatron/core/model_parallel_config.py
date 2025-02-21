@@ -33,7 +33,7 @@ class ModelParallelConfig:
        arxiv.org/pdf/2104.04473.pdf for more details.
     """
 
-    sequence_parallel: bool = False
+    sequence_parallel: bool = True
     """Makes tensor parallelism more memory efficient for LLMs (20B+) by parallelizing layer norms
        and dropout sequentially.  See Reducing Activation Recomputation in Large Transformer Models
        (https://arxiv.org/abs/2205.05198) for more details.
