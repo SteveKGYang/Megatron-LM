@@ -1,7 +1,7 @@
 #!/bin/bash
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/'
+LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test_1/'
 TARGET_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test_tp1_core/'
 
 PATTERN="tokenizer*.json"
