@@ -79,7 +79,7 @@ def _load_checkpoint(queue, args):
                 # '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
                 # '--tokenizer-type', 'HuggingFaceTokenizer',
                 # '--tensor-model-parallel-size', '4'
-
+                '--ckpt-format', 'torch',
                 '--num-layers', '6',
                 '--hidden-size', '768',
                 '--ffn-hidden-size', '3072',
@@ -109,7 +109,7 @@ def _load_checkpoint(queue, args):
                 '--qk-layernorm',
                 '--tokenizer-model', '/mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k',
                 '--tokenizer-type', 'HuggingFaceTokenizer',
-                '--tensor-model-parallel-size', '4',
+                '--tensor-model-parallel-size', '1',
                 '--pipeline-model-parallel-size', '2',
                 # '--decoder-first-pipeline-num-layers', '4',
                 # '--decoder-last-pipeline-num-layers', '4',
