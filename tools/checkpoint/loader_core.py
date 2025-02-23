@@ -100,7 +100,7 @@ def _load_checkpoint(queue, args):
                 '--moe-aux-loss-coeff', '0.0001',
                 '--moe-token-dispatcher-type', 'alltoall',
                 '--moe-per-layer-logging',
-                'moe_permute_fusion', 'True',
+                '--moe-permute-fusion',
                 # --moe-router-topk-limited-devices 4
                 '--kv-lora-rank', '512',
                 '--qk-head-dim', '128',
