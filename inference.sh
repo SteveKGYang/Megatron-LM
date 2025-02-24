@@ -28,6 +28,7 @@ MODEL_ARGS=(
     --qk-layernorm
     --moe-router-enable-expert-bias
     --moe-router-bias-update-rate 0.001
+    --moe-router-score-function sigmoid
 )
 
 INFERENCE_SPECIFIC_ARGS=(
