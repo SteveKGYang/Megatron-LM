@@ -1,7 +1,7 @@
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 export AZUREML_NODE_COUNT=${AZUREML_NODE_COUNT:=1}
-export GPU_PER_NODE_COUNT=${GPU_PER_NODE_COUNT:=4}
+export GPU_PER_NODE_COUNT=${GPU_PER_NODE_COUNT:=8}
 export NODE_RANK=${NODE_RANK:=0}
 export MASTER_ADDR=${MASTER_ADDR:=localhost}
 export MASTER_PORT=${MASTER_PORT:=1828}
@@ -14,15 +14,15 @@ TOKENIZER_ARGS=(
 MODEL_ARGS=(
     --use-checkpoint-args
     --use-mcore-models
-    --tensor-model-parallel-size 4
-    --pipeline-model-parallel-size 5
-    --expert-model-parallel-size 4
-    --decoder-first-pipeline-num-layers 4
-    --decoder-last-pipeline-num-layers 4
+    --tensor-model-parallel-size 2
+    --pipeline-model-parallel-size 4
+    --expert-model-parallel-size 2
+    --decoder-first-pipeline-num-layers 6
+    --decoder-last-pipeline-num-layers 6
     --context-parallel-size 1
     --expert-tensor-parallel-size 1
     --bf16
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test_2
     --sequence-parallel
     --ckpt-format torch
     --qk-layernorm
