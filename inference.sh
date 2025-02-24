@@ -25,7 +25,7 @@ MODEL_ARGS=(
     --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/
     --sequence-parallel
     --ckpt-format torch
-    --qk_layer_norm
+    --qk-layernorm
     --moe-router-enable-expert-bias
     --moe-router-bias-update-rate 0.001
 )
