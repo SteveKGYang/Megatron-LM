@@ -36,12 +36,12 @@ INFERENCE_SPECIFIC_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-#  /root/.local/bin/accelerate launch evaluate.py \
-#     ${TOKENIZER_ARGS[@]} \
-#     ${MODEL_ARGS[@]} \
-#     ${INFERENCE_SPECIFIC_ARGS[@]}
-
-accelerate launch evaluate.py \
+ /root/.local/bin/accelerate launch evaluate.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]}
+
+# accelerate launch evaluate.py \
+#     ${TOKENIZER_ARGS[@]} \
+#     ${MODEL_ARGS[@]} \
+#     ${INFERENCE_SPECIFIC_ARGS[@]}
