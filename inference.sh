@@ -22,7 +22,7 @@ MODEL_ARGS=(
     --context-parallel-size 1
     --expert-tensor-parallel-size 1
     --bf16
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test_2
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_64exp_tiny_dclm_1T_128node_0222_test
     --sequence-parallel
     --ckpt-format torch
     --qk-layernorm
