@@ -346,7 +346,8 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
         reqs = [req.args for req in requests]
 
         def _collate(x):
-            toks = self.tokenizer.encode(x[0])
+            # toks = self.tokenizer.encode(x[0])
+            toks = self.tokenizer.tokenize(x[0])
             return (len(toks), x[0])
 
         reord = lm_eval.utils.Reorderer(reqs, _collate)
