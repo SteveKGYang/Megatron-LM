@@ -24,6 +24,7 @@ MODEL_ARGS=(
     --bf16
     --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/
     --sequence-parallel
+    --ckpt-format torch
 )
 
 INFERENCE_SPECIFIC_ARGS=(
