@@ -917,28 +917,33 @@ def _load_base_checkpoint(
     else:
         checkpoint_name = get_checkpoint_name(load_dir, iteration, release, return_base_dir=False)
     
-    print(checkpoint_name)
-    try:
-        state_dict = torch.load(checkpoint_name, map_location='cpu')
-    except ModuleNotFoundError:
-        from megatron.legacy.fp16_deprecated import loss_scaler
+    print("checkpoint name: ", checkpoint_name)
+    # sync
+    if torch.distributed.is_initialized():
+        torch.distributed.barrier()
+    state_dict = torch.load(checkpoint_name, map_location='cpu')
+    print("state_dict: ", state_dict)
+    # try:
+    #     state_dict = torch.load(checkpoint_name, map_location='cpu')
+    # except ModuleNotFoundError:
+    #     from megatron.legacy.fp16_deprecated import loss_scaler
 
-        # For backward compatibility.
-        if not rank0:
-            print_rank_0(' > deserializing using the old code structure ...')
-        sys.modules['fp16.loss_scaler'] = sys.modules['megatron.legacy.fp16_deprecated.loss_scaler']
-        sys.modules['megatron.fp16.loss_scaler'] = sys.modules[
-            'megatron.legacy.fp16_deprecated.loss_scaler'
-        ]
-        sys.modules['megatron.model'] = sys.modules['megatron.legacy.model']
-        state_dict = torch.load(checkpoint_name, map_location='cpu')
-        sys.modules.pop('fp16.loss_scaler', None)
-        sys.modules.pop('megatron.fp16.loss_scaler', None)
-        sys.modules.pop('megatron.model', None)
-    except Exception as e:
-        print('could not load the checkpoint')
-        print(e)
-        sys.exit()
+    #     # For backward compatibility.
+    #     if not rank0:
+    #         print_rank_0(' > deserializing using the old code structure ...')
+    #     sys.modules['fp16.loss_scaler'] = sys.modules['megatron.legacy.fp16_deprecated.loss_scaler']
+    #     sys.modules['megatron.fp16.loss_scaler'] = sys.modules[
+    #         'megatron.legacy.fp16_deprecated.loss_scaler'
+    #     ]
+    #     sys.modules['megatron.model'] = sys.modules['megatron.legacy.model']
+    #     state_dict = torch.load(checkpoint_name, map_location='cpu')
+    #     sys.modules.pop('fp16.loss_scaler', None)
+    #     sys.modules.pop('megatron.fp16.loss_scaler', None)
+    #     sys.modules.pop('megatron.model', None)
+    # except Exception as e:
+    #     print('could not load the checkpoint')
+    #     print(e)
+    #     sys.exit()
 
     return state_dict, checkpoint_name, release, CheckpointType.LEGACY
 
