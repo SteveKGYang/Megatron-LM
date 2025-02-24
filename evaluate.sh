@@ -26,7 +26,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_fineweb_generation_test.json
     # --results-path /mnt/mydata/klyang/results_olmo_replicate.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-    --task-list mmlu_generation
+    --task-list mmlu_generative
     --num-fewshot 5
     --trust-remote-code
 )
