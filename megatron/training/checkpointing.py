@@ -864,8 +864,7 @@ def _load_base_checkpoint(
         if os.path.isfile(tracker_filename):
             iteration, release = read_metadata(tracker_filename)
             print("read iteration number", iteration)
-            # to do
-            iteration = 2000
+            
     if non_persistent_iteration != -1:  # there is a non-persistent checkpoint
         if non_persistent_iteration >= iteration:
             return _load_non_persistent_base_checkpoint(
