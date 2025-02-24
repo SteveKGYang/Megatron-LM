@@ -922,7 +922,7 @@ def _load_base_checkpoint(
         torch.distributed.barrier()
     state_dict = torch.load(checkpoint_name, map_location='cpu')
     print("checkpoint name: ", checkpoint_name)
-    print("state_dict: ", state_dict.shape)
+    # print("state_dict: ", state_dict.shape)
     # try:
     #     state_dict = torch.load(checkpoint_name, map_location='cpu')
     # except ModuleNotFoundError:
