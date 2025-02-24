@@ -381,10 +381,16 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                 kwargs.pop("do_sample")
 
             stop_tokens = [self.tokenizer.encode(i) for i in until]
+            # cont = self.generate(
+            #     text=context,
+            #     stop_tokens=stop_tokens,
+            #     recompute=self.neox_args.recompute,
+            #     maximum_tokens=max_gen_toks,
+            #     **kwargs,
+            # )
             cont = self.generate(
                 text=context,
                 stop_tokens=stop_tokens,
-                recompute=self.neox_args.recompute,
                 maximum_tokens=max_gen_toks,
                 **kwargs,
             )
