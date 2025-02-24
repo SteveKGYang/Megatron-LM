@@ -8,7 +8,7 @@ doc_to_text: "{{question.strip()}}\nA. {{choices[0]}}\nB. {{choices[1]}}\nC. {{c
 doc_to_target: "{{['A', 'B', 'C', 'D'][answer]}}"
 generation_kwargs:
   until:
-    - "</s>"
+    # - "</s>"
     - "\n"
     - "<|end_of_text|>"
 metric_list:

@@ -380,7 +380,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             if "do_sample" in kwargs.keys():
                 kwargs.pop("do_sample")
 
-            stop_tokens = [self.tokenizer.encode(i) for i in until]
+            stop_tokens = [self.tokenizer.tokenize(i) for i in until]
             # cont = self.generate(
             #     text=context,
             #     stop_tokens=stop_tokens,
