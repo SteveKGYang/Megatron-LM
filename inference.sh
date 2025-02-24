@@ -27,7 +27,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --temperature 0
 )
 
-torchrun --nproc-per-node=20 gpt_batch_inference.py \
+torchrun --nproc-per-node=4 gpt_batch_inference.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]} \
