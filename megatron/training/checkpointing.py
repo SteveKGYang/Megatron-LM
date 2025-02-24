@@ -150,6 +150,8 @@ def get_checkpoint_name(checkpoints_path, iteration, release=False,
     if expert_parallel:
         common_path = common_path + f'_{expert_rank:03d}'
 
+    print("common path: ", common_path)
+    print("basename: ", basename)
     return os.path.join(common_path, basename)
 
 
