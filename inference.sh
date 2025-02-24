@@ -23,6 +23,7 @@ MODEL_ARGS=(
     --expert-tensor-parallel-size 1
     --bf16
     --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/
+    --sequence-parallel
 )
 
 INFERENCE_SPECIFIC_ARGS=(
