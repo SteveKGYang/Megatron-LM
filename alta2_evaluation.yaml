@@ -16,7 +16,7 @@ environment:
     - pip install deepspeed --user
     - pip install datasets numpy tensorboard jsonlines ujson --user
     - pip install wandb --user
-    - pip install lm_eval --user
+    # - pip install lm_eval --user
     - echo "[Used Python Env]"
     - pip list
     - echo "[Used Disk]"
@@ -43,7 +43,7 @@ storage:
   #   mount_dir: /mnt/pretrain
 
 jobs:
-- name: megatron_evaluation_olmo
+- name: megatron_evaluation_fineweb_test
   sku: 1xG8-H100-IB
   # sla_tier: Standard
   sla_tier: Premium
