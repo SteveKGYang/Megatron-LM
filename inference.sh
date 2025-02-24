@@ -22,14 +22,14 @@ MODEL_ARGS=(
     --context-parallel-size 1
     --expert-tensor-parallel-size 1
     --bf16
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/iter_0002000
     --sequence-parallel
     --ckpt-format torch
     --qk-layernorm
     --moe-router-enable-expert-bias
     --moe-router-bias-update-rate 0.001
     --moe-router-score-function sigmoid
-    --distributed-timeout-minutes 120
+    # --distributed-timeout-minutes 120
 )
 
 INFERENCE_SPECIFIC_ARGS=(
