@@ -29,6 +29,7 @@ MODEL_ARGS=(
     --moe-router-enable-expert-bias
     --moe-router-bias-update-rate 0.001
     --moe-router-score-function sigmoid
+    --distributed-timeout-minutes 120
 )
 
 INFERENCE_SPECIFIC_ARGS=(
