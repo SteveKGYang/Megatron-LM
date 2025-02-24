@@ -339,7 +339,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
         :param requests: Dictionary of requests containing the context (prompt) and 'until' - a token or
                          list of stop tokens.
         """
-        self.model.module.inference_mode(use_cache=True)  # tell model to cache kv pairs
+        # self.model.module.inference_mode(use_cache=True)  # tell model to cache kv pairs
         res = []
 
         # get only the args from each Instance object
