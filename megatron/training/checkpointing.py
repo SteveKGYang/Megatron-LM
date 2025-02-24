@@ -1233,6 +1233,7 @@ def load_checkpoint(model, optimizer, opt_param_scheduler, load_arg='load', stri
         load_dir, args, rank0=False, checkpointing_context=checkpointing_context,
         **load_kwargs
     )
+    print(f"state_dict loaded from {checkpoint_name}")
 
     # Checkpoint not loaded.
     if state_dict is None:
@@ -1275,6 +1276,7 @@ def load_checkpoint(model, optimizer, opt_param_scheduler, load_arg='load', stri
         print_rank_0('could not find arguments in the checkpoint ...')
 
     # Model.
+    print("start loading model from the state dict")
     strict = False if args.retro_add_retriever else strict
     if not skip_load_to_model_and_opt:
         if len(model) == 1:
@@ -1283,6 +1285,7 @@ def load_checkpoint(model, optimizer, opt_param_scheduler, load_arg='load', stri
             for i in range(len(model)):
                 mpu.set_virtual_pipeline_model_parallel_rank(i)
                 model[i].load_state_dict(state_dict['model%d' % i], strict=strict)
+    print("model loaded from the state dict")
 
     # Fix up query/key/value matrix ordering if needed.
     checkpoint_version = get_checkpoint_version()
