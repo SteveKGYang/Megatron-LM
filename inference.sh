@@ -25,8 +25,6 @@ MODEL_ARGS=(
     --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_ckpt_test/
     --sequence-parallel
     --ckpt-format torch
-    --qk-layernorm
-    --moe-router-enable-expert-bias
 )
 
 INFERENCE_SPECIFIC_ARGS=(
