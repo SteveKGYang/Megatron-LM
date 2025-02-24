@@ -10,6 +10,7 @@ generation_kwargs:
   until:
     - "</s>"
     - "\n"
+    - "<|end_of_text|>"
 metric_list:
   - metric: exact_match
     aggregation: mean

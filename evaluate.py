@@ -71,6 +71,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
         self.tokenizer = tokenizer
         self.VOCAB_SIZE = tokenizer.vocab_size
         self.EOT_TOKEN_ID = tokenizer.eod
+        self.max_gen_toks = 256
 
         self._max_length = args.seq_length
 
