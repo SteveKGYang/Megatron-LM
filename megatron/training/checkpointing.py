@@ -917,9 +917,6 @@ def _load_base_checkpoint(
     else:
         checkpoint_name = get_checkpoint_name(load_dir, iteration, release, return_base_dir=False)
 
-    # sync
-    if torch.distributed.is_initialized():
-        torch.distributed.barrier()
     state_dict = torch.load(checkpoint_name, map_location='cpu')
     print("checkpoint name: ", checkpoint_name)
     # print("state_dict: ", state_dict.shape)
