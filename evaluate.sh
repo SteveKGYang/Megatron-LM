@@ -23,10 +23,10 @@ INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
     --micro-batch-size 12
-    --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_dclm_test.json
+    --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_fineweb_generation_test.json
     # --results-path /mnt/mydata/klyang/results_olmo_replicate.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-    --task-list mmlu_continuation
+    --task-list mmlu_generation
     --num-fewshot 5
     --trust-remote-code
 )
