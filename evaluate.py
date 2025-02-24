@@ -407,7 +407,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
 
             res.append(s)
 
-        self.model.module.train_mode()  # set back to train mode
+        # self.model.module.train_mode()  # set back to train mode
         return reord.get_original(res)
 
 
