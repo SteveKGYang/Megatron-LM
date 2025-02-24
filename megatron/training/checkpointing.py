@@ -911,6 +911,8 @@ def _load_base_checkpoint(
         checkpoint_name = find_checkpoint_rank_0(load_dir, iteration, release)
     else:
         checkpoint_name = get_checkpoint_name(load_dir, iteration, release, return_base_dir=False)
+    
+    print(checkpoint_name)
     try:
         state_dict = torch.load(checkpoint_name, map_location='cpu')
     except ModuleNotFoundError:
