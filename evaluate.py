@@ -400,7 +400,6 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                 stop_tokens=stop_tokens,
                 eos_token_id=self.EOT_TOKEN_ID,
                 maximum_tokens=max_gen_toks,
-                
                 **kwargs,
             )
             if cont:

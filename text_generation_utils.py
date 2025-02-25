@@ -301,6 +301,7 @@ def stream_tokens(
         )
 
         while token_index_to_generate <= last_token_index_to_generate:
+            recompute = True
             if recompute:  # recompute all tokens
                 model_inputs = (
                     context_tokens,
