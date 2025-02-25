@@ -2,6 +2,13 @@
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 # alias python='/root/.local/lib/python3.12'
 
+export CUDA_DEVICE_MAX_CONNECTIONS=1
+
+export AZUREML_NODE_COUNT=${AZUREML_NODE_COUNT:=1}
+export GPU_PER_NODE_COUNT=${GPU_PER_NODE_COUNT:=8}
+export NODE_RANK=${NODE_RANK:=0}
+export MASTER_ADDR=${MASTER_ADDR:=localhost}
+export MASTER_PORT=${MASTER_PORT:=1828}
 
 TOKENIZER_ARGS=(
     # --tokenizer-model /mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k
@@ -42,12 +49,12 @@ INFERENCE_SPECIFIC_ARGS=(
     --trust-remote-code
 )
 
-# torchrun --nproc-per-node=4 evaluate.py \
-#     ${TOKENIZER_ARGS[@]} \
-#     ${MODEL_ARGS[@]} \
-#     ${INFERENCE_SPECIFIC_ARGS[@]}
-
- /root/.local/bin/accelerate launch evaluate.py \
+torchrun --nproc_per_node=$GPU_PER_NODE_COUNT --nnodes=$AZUREML_NODE_COUNT --node_rank=$NODE_RANK  --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT evaluate.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]}
+
+#  /root/.local/bin/accelerate launch evaluate.py \
+#     ${TOKENIZER_ARGS[@]} \
+#     ${MODEL_ARGS[@]} \
+#     ${INFERENCE_SPECIFIC_ARGS[@]}

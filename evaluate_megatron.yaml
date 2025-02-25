@@ -36,7 +36,7 @@ taskRoles:
       - export NCCL_DEBUG=WARN
       - nvidia-smi
       - echo "Download code"
-      - git clone https://github.com/SteveKGYang/Megatron-LM.git
+      - git clone -b moe_load https://github.com/SteveKGYang/Megatron-LM.git
       - cd Megatron-LM
       - ls -alh .
       - echo "Prepare other envs"
