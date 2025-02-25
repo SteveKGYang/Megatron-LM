@@ -36,7 +36,7 @@ from megatron.training.utils import get_ltor_masks_and_position_ids
 from megatron.core.tensor_parallel.mappings import gather_from_tensor_model_parallel_region
 
 
-def get_batch(tokenizer, context_tokens: torch.Tensor, eod_mask_loss=True):
+def get_batch(tokenizer, context_tokens: torch.Tensor, reset_position_ids=False, reset_attention_mask=False, eod_mask_loss=True):
     """
     Generate batch from context tokens. Attention mask and position ids are created. Returned tensors will be on CUDA.
 
@@ -52,7 +52,9 @@ def get_batch(tokenizer, context_tokens: torch.Tensor, eod_mask_loss=True):
     attention_mask, _, position_ids = get_ltor_masks_and_position_ids(
         data=tokens,
         eod_token=tokenizer.eod,
-        eod_mask_loss=eod_mask_loss,
+        reset_position_ids=reset_position_ids,
+        reset_attention_mask=reset_attention_mask,
+        eod_mask_loss=eod_mask_loss
     )
     return tokens, attention_mask, position_ids
 
