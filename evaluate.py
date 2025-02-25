@@ -365,7 +365,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
     def _model_call(self, inps):
         batch_size = inps.shape[0]
 
-        _, logits = self._forward_step_fn(model=self.model, data_iterator=inps)
+        _, logits = forward_step(model=self.model, data_iterator=inps)
 
         logits = logits[:batch_size, ...]
         return logits
