@@ -209,6 +209,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                 logits = self._model_call(torch.cat(inps, dim=0))
                 res_len += len(chunk)
                 if logits is not None:
+                    print(logits)
                     multi_logits = F.log_softmax(logits, dim=-1).cpu()  # [batch, seq, vocab]
 
                     for (cache_key, _, _), logits, inp, inplen, cont_toks in zip(chunk, multi_logits, inps, inplens, contlens):
@@ -232,7 +233,10 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             #        We just randomly generate some data.
             res = [(np.random.rand(), np.random.rand()>0.5) for _ in requests]
 
-        print("random result: ", res)
+        if not mpu.is_pipeline_last_stage():
+            print("random result: ", res)
+        else:
+            print("last stage result: ", res)
 
         # broadcast results to all ranks
         if self.is_pipe_parallel:
@@ -245,6 +249,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             else:
                 logits_sums = torch.zeros(res_len, dtype=torch.float32).cuda()
                 max_equals = torch.zeros(res_len, dtype=torch.int64).cuda()
+            
             torch.distributed.broadcast(
                 tensor=logits_sums,
                 src=src_rank,
