@@ -159,6 +159,8 @@ def main():
 
     inference_engine = get_inference_engine(args, model)
 
+    print("engine initialized")
+
     sampling_params = SamplingParams(
         temperature=args.temperature,
         top_k=args.top_k,
