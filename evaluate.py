@@ -109,13 +109,13 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
     
     @property
     def rank(self):
-        # return torch.cuda.current_device()
-        return 0            # 0116: fix multi-gpu issue related to lm-eval
+        return torch.cuda.current_device()
+        # return 0            # 0116: fix multi-gpu issue related to lm-eval
     
     @property
     def world_size(self):
-        # return self.accelerator.num_processes
-        return 1            # 0116: fix multi-gpu issue related to lm-eval
+        return self.accelerator.num_processes
+        # return 1            # 0116: fix multi-gpu issue related to lm-eval
 
 
     def loglikelihood(self, requests):
@@ -574,26 +574,28 @@ def main():
     adaptor = EvalHarnessAdaptor(model, tokenizer, accelerator)
 
     print("starting evaluation of {}...".format(args.task_list))
-    try:
-        results = lm_eval.evaluator.evaluate(adaptor, task_dict, False, args.num_fewshot, None)
-        print(results)
-        print("end of evaluation of {}".format(args.task_list))
-    except Exception as e:
-        print(f"Caught exception: {e}")
+    # try:
+    #     results = lm_eval.evaluator.evaluate(adaptor, task_dict, False, args.num_fewshot, None)
+    #     print(results)
+    #     print("end of evaluation of {}".format(args.task_list))
+    # except Exception as e:
+    #     print(f"Caught exception: {e}")
     
     #!
     # if args.msamp:
     #     from megatron.core import tensor_parallel
     #     tensor_parallel.linear_with_grad_accumulation_and_async_allreduce.permit_fp4_computation = True     # todo 这里只需要把这个属性设置下就行，否则会报错找不到这个属性
-    
-    results = lm_eval.simple_evaluate(
-        model=adaptor, 
-        tasks=task_list, 
-        num_fewshot=args.num_fewshot
-    )
-    
-    print(results)
-    print("end of evaluation of {}".format(args.task_list))
+
+    # only the first dp process will evaluate
+    if mpu.get_data_parallel_rank() == 0:  
+        results = lm_eval.simple_evaluate(
+            model=adaptor, 
+            tasks=task_list, 
+            num_fewshot=args.num_fewshot
+        )
+        
+        print(results)
+        print("end of evaluation of {}".format(args.task_list))
 
     if mpu.is_pipeline_last_stage() and mpu.get_tensor_model_parallel_rank() == 0:
         # print(json.dumps(results, indent=2))
