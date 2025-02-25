@@ -149,7 +149,9 @@ def forward_model(model, model_inputs, is_pipe_parallel=False) -> torch.Tensor:
     # because someone at deepspeed decided pipeline modules couldn't use kwargs,
     # we need to forward a pipe model differently to a normal model
     if not is_pipe_parallel:
-        return model.module(model_inputs)
+        # return model.module(model_inputs)
+        context_tokens, position_ids, attention_mask = model_inputs
+        return model.module(context_tokens, position_ids=position_ids, attention_mask=position_ids)
     else:
         # we need to format inputs this way because:
         # a) deepspeed pipeline only accepts iterables
