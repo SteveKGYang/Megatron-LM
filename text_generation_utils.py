@@ -205,7 +205,7 @@ def stream_tokens(
     eos_token_id: int = None,
     seq_len: int = None,
     maximum_tokens: int = None,
-    recompute: bool = False,
+    recompute: bool = True,
     temperature: float = 0.0,
     top_k: int = 0,
     top_p: float = 0.0,
