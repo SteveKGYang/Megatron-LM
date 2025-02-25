@@ -572,7 +572,14 @@ def main():
 
     tokenizer = get_tokenizer()
     adaptor = EvalHarnessAdaptor(model, tokenizer, accelerator)
-    # results = lm_eval.evaluator.evaluate(adaptor, task_dict, False, args.num_fewshot, None)
+
+    print("starting evaluation of {}...".format(args.task_list))
+    try:
+        results = lm_eval.evaluator.evaluate(adaptor, task_dict, False, args.num_fewshot, None)
+        print(results)
+        print("end of evaluation of {}".format(args.task_list))
+    except Exception as e:
+        print(f"Caught exception: {e}")
     
     #!
     # if args.msamp:
@@ -586,6 +593,7 @@ def main():
     )
     
     print(results)
+    print("end of evaluation of {}".format(args.task_list))
 
     if mpu.is_pipeline_last_stage() and mpu.get_tensor_model_parallel_rank() == 0:
         # print(json.dumps(results, indent=2))
