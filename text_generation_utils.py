@@ -212,7 +212,7 @@ def stream_tokens(
     top_k: int = 0,
     top_p: float = 0.0,
     stop_tokens=None,
-    return_logits: bool = True
+    return_logits: bool = False
 ):
     """
     iterator producing text completions
