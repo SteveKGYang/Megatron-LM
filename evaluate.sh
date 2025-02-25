@@ -40,7 +40,7 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 3
+    --micro-batch-size 2
     # --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_dclm.json
     --results-path /mnt/mydata/klyang/results_olmo_replicate_debug_1.json
     --task-list openbookqa
