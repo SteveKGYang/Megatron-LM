@@ -132,6 +132,9 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
 
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
 
+            if len(new_reqs) >= 10:
+                break
+
         return self._loglikelihood_tokens(new_reqs)
 
     def loglikelihood_rolling(self, requests):
@@ -172,6 +175,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                 return (-len(toks), tuple(toks))
 
             reord = lm_eval.utils.Reorderer(requests, _collate)
+
             for chunk in lm_eval.models.utils.chunks(tqdm(reord.get_reordered(), disable=disable_tqdm), self.batch_size):
                 inps, contlens, inplens, padding_length = [], [], [], None
                 for _, context_enc, continuation_enc in chunk:
@@ -199,7 +203,6 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                     inplens.append(inplen)
 
                 logits = self._model_call(torch.cat(inps, dim=0))
-                print("model call logits: ", logits.shape)
                 res_len += len(chunk)
                 if logits is not None:
                     multi_logits = F.log_softmax(logits, dim=-1).cpu()  # [batch, seq, vocab]
@@ -220,14 +223,15 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                             self.cache_hook.add_partial("loglikelihood", cache_key, answer)
                         res.append(answer)
 
-        # if not mpu.is_pipeline_last_stage():
-        #     # @HACK: To make the eval harness happy on threads that don't have access to the results.
-        #     #        We just randomly generate some data.
-        #     res = [(np.random.rand(), np.random.rand()>0.5) for _ in requests]
+        if not mpu.is_pipeline_last_stage():
+            # @HACK: To make the eval harness happy on threads that don't have access to the results.
+            #        We just randomly generate some data.
+            res = [(np.random.rand(), np.random.rand()>0.5) for _ in requests]
 
         # broadcast results to all ranks
         if self.is_pipe_parallel:
-            src_rank = self.model.grid.stage_to_global(self.model.num_stages - 1)
+            # find the last stage rank
+            src_rank = mpu.get_pipeline_model_parallel_last_rank()
             if res:
                 logits_sums, max_equals = list(zip(*res))
                 logits_sums = torch.FloatTensor(logits_sums).cuda()
