@@ -223,10 +223,12 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
 
                         logits = torch.gather(logits, 2, cont_toks.unsqueeze(-1)).squeeze(-1)  # [1, seq]
                         answer = (float(logits.sum()), bool(max_equal))
+                        print("answer: ", answer)
                         # partial caching
                         if cache_key is not None:
                             self.cache_hook.add_partial("loglikelihood", cache_key, answer)
                         res.append(answer)
+                    print("res: ", res)
 
         if not mpu.is_pipeline_last_stage():
             # @HACK: To make the eval harness happy on threads that don't have access to the results.
