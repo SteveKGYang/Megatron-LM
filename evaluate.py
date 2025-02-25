@@ -242,10 +242,10 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             torch.distributed.broadcast(
                 tensor=logits_sums,
                 src=src_rank,
-                group=mpu.get_pipe_parallel_group(),
+                group=mpu.get_pipeline_model_parallel_group(),
             )
             torch.distributed.broadcast(
-                tensor=max_equals, src=src_rank, group=mpu.get_pipe_parallel_group()
+                tensor=max_equals, src=src_rank, group=mpu.get_pipeline_model_parallel_group()
             )
             max_equals = [bool(i) for i in max_equals.tolist()]
             logits_sums = logits_sums.tolist()
