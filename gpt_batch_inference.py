@@ -155,6 +155,8 @@ def main():
     model = model[0]
     print(model)
 
+    
+
     args = get_args()
 
     inference_engine = get_inference_engine(args, model)
