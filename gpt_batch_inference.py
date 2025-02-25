@@ -153,6 +153,7 @@ def main():
     model = get_model(model_provider, wrap_with_ddp=False)
     load_checkpoint(model, None, None)
     model = model[0]
+    print(model)
 
     args = get_args()
 
