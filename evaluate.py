@@ -109,13 +109,13 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
     
     @property
     def rank(self):
-        # return torch.cuda.current_device()
-        return 0            # 0116: fix multi-gpu issue related to lm-eval
+        return torch.cuda.current_device()
+        # return 0            # 0116: fix multi-gpu issue related to lm-eval
     
     @property
     def world_size(self):
-        # return self.accelerator.num_processes
-        return 1            # 0116: fix multi-gpu issue related to lm-eval
+        return self.accelerator.num_processes
+        # return 1            # 0116: fix multi-gpu issue related to lm-eval
 
 
     def loglikelihood(self, requests):
