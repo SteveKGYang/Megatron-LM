@@ -132,14 +132,10 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
 
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
 
-            if len(new_reqs) >= 10:
-                try:
-                    print(new_reqs[0])
-                    break
-                except:
-                    break
+        print(len(new_reqs))
+        print(new_reqs[0])
 
-        return self._loglikelihood_tokens(new_reqs)
+        return self._loglikelihood_tokens(new_reqs[0:10])
 
     def loglikelihood_rolling(self, requests):
         # TODO: Implement caching once we've confirmed the perplexity implementation
@@ -181,7 +177,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             reord = lm_eval.utils.Reorderer(requests, _collate)
 
             for chunk in lm_eval.models.utils.chunks(tqdm(reord.get_reordered(), disable=disable_tqdm), self.batch_size):
-                print(chunk)
+                print("chunk:", chunk)
                 inps, contlens, inplens, padding_length = [], [], [], None
                 for _, context_enc, continuation_enc in chunk:
                     # when too long to fit in context, truncate from the left
@@ -189,6 +185,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                         (context_enc + continuation_enc)[-(self.max_length + 1):][:-1]
                         , dtype=torch.long).to(self.device)
                     inplen, = inp.shape
+                    print("inp shape: ", inp.shape)
 
                     cont = continuation_enc
 
@@ -327,8 +324,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                     data_iterator = list((torch.stack(inp) for inp in lm_eval.utils.chunks(padded, args.micro_batch_size)))
                     self.model.micro_batches = len(data_iterator)
                     output = self.model.eval_batch(iter(data_iterator), compute_loss = False, reduce_output = None)
-
-
+                    
                     if output is not None:
                         output = torch.cat(output, 0)[:len(inps)]
                     else:
