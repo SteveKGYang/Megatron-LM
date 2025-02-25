@@ -287,7 +287,7 @@ def stream_tokens(
     token_index_to_generate = token_generation_start_index.min().item()
     first_token_index_to_generate = token_index_to_generate
     last_token_index_to_generate = min(
-        neox_args.seq_length
+        seq_len
         - 1,  # never generate more than the model's sequence length
         token_index_to_generate + maximum_tokens - 1,
     )
@@ -307,7 +307,8 @@ def stream_tokens(
                     position_ids,
                     attention_mask,
                 )
-                logits = forward_model(model, model_inputs, neox_args.is_pipe_parallel)
+                # logits = forward_model(model, model_inputs, neox_args.is_pipe_parallel)
+                logits = forward_model(model, model_inputs)
                 if logits is not None:  # if pipe parallel, not all ranks return logits
                     generated_token_logits = logits[
                         :, token_index_to_generate - 1, :
@@ -330,7 +331,7 @@ def stream_tokens(
                     attention_mask,  # attention_mask
                 )
 
-                logits = forward_model(model, model_inputs, neox_args.is_pipe_parallel)
+                logits = forward_model(model, model_inputs)
                 if logits is not None:  # if pipe parallel, not all ranks return logits
                     generated_token_logits = (
                         logits[:, -1].view(batch_size, -1).contiguous()
@@ -536,7 +537,7 @@ def generate_samples_from_prompt(
             if end_index >= start_index:
                 generated_tokens = tokens[start_index : end_index + 1]
                 try:
-                    generated_text = neox_args.tokenizer.detokenize(generated_tokens)
+                    generated_text = tokenizer.detokenize(generated_tokens)
                     message = None
                 except KeyError:
                     generated_text = None
@@ -556,7 +557,8 @@ def generate_samples_from_prompt(
                     "duration_seconds": float(time.time() - start_time),
                 }
 
-                if neox_args.return_logits:
+                # if neox_args.return_logits:
+                if True:
                     data["logits"] = batch_generated_token_logits.cpu().numpy().tolist()
 
                 generated_texts.append(data)
