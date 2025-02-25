@@ -206,6 +206,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                     contlens.append(cont)
                     inplens.append(inplen)
 
+                print("input shape: ", torch.cat(inps, dim=0).shape)   
                 logits = self._model_call(torch.cat(inps, dim=0))
                 res_len += len(chunk)
                 if logits is not None:
