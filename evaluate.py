@@ -132,8 +132,8 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
 
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
 
-        print(len(new_reqs))
-        print(new_reqs[0])
+        print_rank_0(len(new_reqs)) # openbookqa: 2000 samples
+        print_rank_0(new_reqs[0]) # openbookqa: 3 options in a question, return 3 sequences
 
         return self._loglikelihood_tokens(new_reqs[0:10])
 
@@ -177,7 +177,8 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             reord = lm_eval.utils.Reorderer(requests, _collate)
 
             for chunk in lm_eval.models.utils.chunks(tqdm(reord.get_reordered(), disable=disable_tqdm), self.batch_size):
-                print("chunk:", chunk)
+                print_rank_0("chunk:", chunk)
+                print_rank_0("chunk length: ", len(chunk))
                 inps, contlens, inplens, padding_length = [], [], [], None
                 for _, context_enc, continuation_enc in chunk:
                     # when too long to fit in context, truncate from the left
@@ -185,7 +186,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                         (context_enc + continuation_enc)[-(self.max_length + 1):][:-1]
                         , dtype=torch.long).to(self.device)
                     inplen, = inp.shape
-                    print("inp shape: ", inp.shape)
+                    print_rank_0("inp shape: ", inp.shape)
 
                     cont = continuation_enc
 
@@ -204,7 +205,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                     contlens.append(cont)
                     inplens.append(inplen)
 
-                print("input shape: ", torch.cat(inps, dim=0).shape)   
+                print_rank_0("input shape: ", torch.cat(inps, dim=0).shape)   
                 logits = self._model_call(torch.cat(inps, dim=0))
                 res_len += len(chunk)
                 if logits is not None:
