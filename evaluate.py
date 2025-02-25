@@ -177,8 +177,8 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             reord = lm_eval.utils.Reorderer(requests, _collate)
 
             for chunk in lm_eval.models.utils.chunks(tqdm(reord.get_reordered(), disable=disable_tqdm), self.batch_size):
-                print_rank_0("chunk:", chunk)
-                print_rank_0("chunk length: ", len(chunk))
+                print_rank_0(f"chunk: {chunk}")
+                print_rank_0(f"chunk length: {len(chunk)}")
                 inps, contlens, inplens, padding_length = [], [], [], None
                 for _, context_enc, continuation_enc in chunk:
                     # when too long to fit in context, truncate from the left
@@ -186,7 +186,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                         (context_enc + continuation_enc)[-(self.max_length + 1):][:-1]
                         , dtype=torch.long).to(self.device)
                     inplen, = inp.shape
-                    print_rank_0("inp shape: ", inp.shape)
+                    print_rank_0(f"inp shape: {inp.shape}")
 
                     cont = continuation_enc
 
@@ -205,7 +205,8 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                     contlens.append(cont)
                     inplens.append(inplen)
 
-                print_rank_0("input shape: ", torch.cat(inps, dim=0).shape)   
+                print_rank_0("cat inp shape")
+                print_rank_0(torch.cat(inps, dim=0).shape)   
                 logits = self._model_call(torch.cat(inps, dim=0))
                 res_len += len(chunk)
                 if logits is not None:
