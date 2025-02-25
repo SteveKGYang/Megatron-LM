@@ -4,8 +4,8 @@ export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 
 TOKENIZER_ARGS=(
-    --tokenizer-model /mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k
-    # --tokenizer-model /mnt/mydata/klyang/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k
+    # --tokenizer-model /mnt/pvc-blob-nfs/xiaoliu2/Sigma1-10b/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k
+    --tokenizer-model /mnt/mydata/klyang/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k
     --tokenizer-type HuggingFaceTokenizer
 )
 
@@ -22,11 +22,11 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 4
-    --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_fineweb_generation_test.json
-    # --results-path /mnt/mydata/klyang/results_olmo_replicate.json
+    --micro-batch-size 8
+    --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_fineweb_gsm8k_test.json
+    # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-    --task-list mmlu_generative
+    --task-list gsm8k
     --num-fewshot 5
     --trust-remote-code
 )

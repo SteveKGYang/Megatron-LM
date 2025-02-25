@@ -1,7 +1,7 @@
 # This code is originally from https://github.com/bigscience-workshop/Megatron-DeepSpeed
 # under the license https://huggingface.co/spaces/bigscience/license
 
-from functools import reduce
+from functools import reduce, partial
 from logging import logMultiprocessing
 import os
 import sys
@@ -40,6 +40,7 @@ from megatron.training.arguments import core_transformer_config_from_args
 from megatron.training.checkpointing import load_checkpoint
 
 from pretrain_gpt import model_provider
+from text_generation_utils import generate_samples_from_prompt
 
 from torch.nn.parallel import DistributedDataParallel as torchDDP
 from megatron.legacy.model import Float16Module
@@ -72,6 +73,12 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
         self.VOCAB_SIZE = tokenizer.vocab_size
         self.EOT_TOKEN_ID = tokenizer.eod
         self.max_gen_toks = 256
+
+        self.generate = partial(
+            generate_samples_from_prompt,
+            tokenizer=self.tokenizer,
+            model=self.model,
+        )
 
         self._max_length = args.seq_length
 
@@ -391,6 +398,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             cont = self.generate(
                 text=context,
                 stop_tokens=stop_tokens,
+                eos_token_id=self.EOT_TOKEN_ID,
                 maximum_tokens=max_gen_toks,
                 **kwargs,
             )
