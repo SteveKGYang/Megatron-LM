@@ -60,6 +60,7 @@ except ImportError:
 
 from accelerate import Accelerator, InitProcessGroupKwargs
 from datetime import timedelta
+from pretrain_gpt import forward_step
     
 
 class EvalHarnessAdaptor(lm_eval.api.model.LM):
@@ -239,6 +240,9 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             else:
                 print("last stage result: ", res)
 
+            # sync results
+            torch.distributed.barrier()
+
             # broadcast results to all ranks
             if self.is_pipe_parallel:
                 # find the last stage rank
@@ -279,84 +283,92 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
 
         return (tokens, position_ids, attention_mask), (tokens, loss_mask)
 
-    def _model_call(self, inps):
-        args = get_args()
-        config = core_transformer_config_from_args(args)
+    # def _model_call(self, inps):
+    #     args = get_args()
+    #     config = core_transformer_config_from_args(args)
 
-        if deepspeed_available:
-            if args.deepspeed:
-                if args.no_pipeline_parallel:
-                    # self.model.set_batch_fn(self.create_model_inputs)
-                    # round up to multiple of micro_batch_size
-                    new_size = ((len(inps) + args.micro_batch_size-1)  // args.micro_batch_size) * args.micro_batch_size
-                    padded = F.pad(inps, (0, 0, 0, new_size-len(inps)), value = 0)
-                    # dummy data iterator for pipelining.
-                    data_iterator = list((torch.stack(inp) for inp in lm_eval.utils.chunks(padded, args.micro_batch_size)))
-                    self.model.micro_batches = len(data_iterator)
-                    # output = self.model.eval_batch(iter(data_iterator), compute_loss = False, reduce_output = None)
-                    output = []
-                    for tokens in data_iterator:
-                        attention_mask, loss_mask, position_ids = get_ltor_masks_and_position_ids(
-                                                                    tokens,
-                                                                    self.EOT_TOKEN_ID,
-                                                                    args.reset_position_ids,
-                                                                    args.reset_attention_mask,
-                                                                    args.eod_mask_loss)
-                        a_output, *other_losses = self.model(tokens,
-                            position_ids,
-                            attention_mask,
-                            tokentype_ids=None)
-                        output.append(a_output)
+    #     if deepspeed_available:
+    #         if args.deepspeed:
+    #             if args.no_pipeline_parallel:
+    #                 # self.model.set_batch_fn(self.create_model_inputs)
+    #                 # round up to multiple of micro_batch_size
+    #                 new_size = ((len(inps) + args.micro_batch_size-1)  // args.micro_batch_size) * args.micro_batch_size
+    #                 padded = F.pad(inps, (0, 0, 0, new_size-len(inps)), value = 0)
+    #                 # dummy data iterator for pipelining.
+    #                 data_iterator = list((torch.stack(inp) for inp in lm_eval.utils.chunks(padded, args.micro_batch_size)))
+    #                 self.model.micro_batches = len(data_iterator)
+    #                 # output = self.model.eval_batch(iter(data_iterator), compute_loss = False, reduce_output = None)
+    #                 output = []
+    #                 for tokens in data_iterator:
+    #                     attention_mask, loss_mask, position_ids = get_ltor_masks_and_position_ids(
+    #                                                                 tokens,
+    #                                                                 self.EOT_TOKEN_ID,
+    #                                                                 args.reset_position_ids,
+    #                                                                 args.reset_attention_mask,
+    #                                                                 args.eod_mask_loss)
+    #                     a_output, *other_losses = self.model(tokens,
+    #                         position_ids,
+    #                         attention_mask,
+    #                         tokentype_ids=None)
+    #                     output.append(a_output)
 
-                    if output is not None:
-                        output = torch.cat(output, 0)[:len(inps)]
-                    else:
-                        output = None
+    #                 if output is not None:
+    #                     output = torch.cat(output, 0)[:len(inps)]
+    #                 else:
+    #                     output = None
 
-                    # hack #2 for adaptive_seq_len to work as total_loss gets appended to and shapes aren't the same
-                    if args.adaptive_seq_len:
-                        self.model.total_loss = None
-                else:
-                    self.model.set_batch_fn(self.create_model_inputs)
-                    # round up to multiple of micro_batch_size
-                    new_size = ((len(inps) + args.micro_batch_size-1)  // args.micro_batch_size) * args.micro_batch_size
-                    padded = F.pad(inps, (0, 0, 0, new_size-len(inps)), value = 0)
-                    # dummy data iterator for pipelining.
-                    data_iterator = list((torch.stack(inp) for inp in lm_eval.utils.chunks(padded, args.micro_batch_size)))
-                    self.model.micro_batches = len(data_iterator)
-                    output = self.model.eval_batch(iter(data_iterator), compute_loss = False, reduce_output = None)
+    #                 # hack #2 for adaptive_seq_len to work as total_loss gets appended to and shapes aren't the same
+    #                 if args.adaptive_seq_len:
+    #                     self.model.total_loss = None
+    #             else:
+    #                 self.model.set_batch_fn(self.create_model_inputs)
+    #                 # round up to multiple of micro_batch_size
+    #                 new_size = ((len(inps) + args.micro_batch_size-1)  // args.micro_batch_size) * args.micro_batch_size
+    #                 padded = F.pad(inps, (0, 0, 0, new_size-len(inps)), value = 0)
+    #                 # dummy data iterator for pipelining.
+    #                 data_iterator = list((torch.stack(inp) for inp in lm_eval.utils.chunks(padded, args.micro_batch_size)))
+    #                 self.model.micro_batches = len(data_iterator)
+    #                 output = self.model.eval_batch(iter(data_iterator), compute_loss = False, reduce_output = None)
                     
-                    if output is not None:
-                        output = torch.cat(output, 0)[:len(inps)]
-                    else:
-                        output = None
+    #                 if output is not None:
+    #                     output = torch.cat(output, 0)[:len(inps)]
+    #                 else:
+    #                     output = None
 
-                    # hack #2 for adaptive_seq_len to work as total_loss gets appended to and shapes aren't the same
-                    if args.adaptive_seq_len:
-                        self.model.total_loss = None
-        else:
-            # Since the shape of the micro-batch will change
-            # We need set the correct shapes here
-            # So that latter pipeline stages knows which shapes to expect.
-            # Otherwise we will deadlock.
+    #                 # hack #2 for adaptive_seq_len to work as total_loss gets appended to and shapes aren't the same
+    #                 if args.adaptive_seq_len:
+    #                     self.model.total_loss = None
+    #     else:
+    #         # Since the shape of the micro-batch will change
+    #         # We need set the correct shapes here
+    #         # So that latter pipeline stages knows which shapes to expect.
+    #         # Otherwise we will deadlock.
 
-            args.micro_batch_size = len(inps)
-            args.seq_length = len(inps[0])
-            args.max_position_embeddings = args.seq_length
+    #         args.micro_batch_size = len(inps)
+    #         args.seq_length = len(inps[0])
+    #         args.max_position_embeddings = args.seq_length
 
-            tensor_shape = (args.seq_length, args.micro_batch_size, args.hidden_size)
-            input_tensor = recv_forward(tensor_shape, config)
+    #         tensor_shape = (args.seq_length, args.micro_batch_size, args.hidden_size)
+    #         input_tensor = recv_forward(tensor_shape, config)
 
-            # Forward pass through the model.
-            unwrapped_model = unwrap_model(self.model, (torchDDP, LocalDDP, Float16Module))
-            unwrapped_model.set_input_tensor(input_tensor)
-            output = self.model(*self.create_model_inputs(inps)[0])
-            send_forward(output, config)
+    #         # Forward pass through the model.
+    #         unwrapped_model = unwrap_model(self.model, (torchDDP, LocalDDP, Float16Module))
+    #         unwrapped_model.set_input_tensor(input_tensor)
+    #         output = self.model(*self.create_model_inputs(inps)[0])
+    #         send_forward(output, config)
 
-        if mpu.is_pipeline_last_stage():
-            return gather_from_tensor_model_parallel_region(output)[..., :self.tokenizer.vocab_size]
-        else:
-            return None
+    #     if mpu.is_pipeline_last_stage():
+    #         return gather_from_tensor_model_parallel_region(output)[..., :self.tokenizer.vocab_size]
+    #     else:
+    #         return None
+
+    def _model_call(self, inps):
+        batch_size = inps.shape[0]
+
+        _, logits = self._forward_step_fn(model=self.model, data_iterator=inps)
+
+        logits = logits[:batch_size, ...]
+        return logits
 
     def tokenizer_encode(self, text):
         """Tokenize text *without* adding special tokens."""
