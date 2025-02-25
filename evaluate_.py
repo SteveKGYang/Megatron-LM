@@ -219,36 +219,12 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                             self.cache_hook.add_partial("loglikelihood", cache_key, answer)
                         res.append(answer)
 
-        # if not mpu.is_pipeline_last_stage():
-        #     # @HACK: To make the eval harness happy on threads that don't have access to the results.
-        #     #        We just randomly generate some data.
-        #     res = [(np.random.rand(), np.random.rand()>0.5) for _ in requests]
+        if not mpu.is_pipeline_last_stage():
+            # @HACK: To make the eval harness happy on threads that don't have access to the results.
+            #        We just randomly generate some data.
+            res = [(np.random.rand(), np.random.rand()>0.5) for _ in requests]
 
-        # broadcast results to all ranks
-        if self.is_pipe_parallel:
-            src_rank = self.model.grid.stage_to_global(self.model.num_stages - 1)
-            if res:
-                logits_sums, max_equals = list(zip(*res))
-                logits_sums = torch.FloatTensor(logits_sums).cuda()
-                max_equals = torch.LongTensor(max_equals).cuda()
-            else:
-                logits_sums = torch.zeros(res_len, dtype=torch.float32).cuda()
-                max_equals = torch.zeros(res_len, dtype=torch.int64).cuda()
-            torch.distributed.broadcast(
-                tensor=logits_sums,
-                src=src_rank,
-                group=mpu.get_pipe_parallel_group(),
-            )
-            torch.distributed.broadcast(
-                tensor=max_equals, src=src_rank, group=mpu.get_pipe_parallel_group()
-            )
-            max_equals = [bool(i) for i in max_equals.tolist()]
-            logits_sums = logits_sums.tolist()
-            res = list(zip(logits_sums, max_equals))
-
-        # self.model.module.train_mode()  # set back to train mode
         return reord.get_original(res)
-
 
     def create_model_inputs(self, tokens):
         args = get_args()
