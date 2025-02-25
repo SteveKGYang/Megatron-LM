@@ -1,5 +1,5 @@
 # export CUDA_VISIBLE_DEVICES=0,1,2,3
-export CUDA_DEVICE_MAX_CONNECTIONS=1
+# export CUDA_DEVICE_MAX_CONNECTIONS=1
 # alias python='/root/.local/lib/python3.12'
 
 export CUDA_DEVICE_MAX_CONNECTIONS=1

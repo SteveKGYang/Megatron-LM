@@ -199,6 +199,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                     inplens.append(inplen)
 
                 logits = self._model_call(torch.cat(inps, dim=0))
+                print("model call logits: ", logits.shape)
                 res_len += len(chunk)
                 if logits is not None:
                     multi_logits = F.log_softmax(logits, dim=-1).cpu()  # [batch, seq, vocab]
