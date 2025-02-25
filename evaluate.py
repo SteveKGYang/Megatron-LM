@@ -133,7 +133,11 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             new_reqs.append(((context, continuation), context_enc, continuation_enc))
 
             if len(new_reqs) >= 10:
-                break
+                try:
+                    print(new_reqs[0][0][0].shape)
+                    break
+                except:
+                    break
 
         return self._loglikelihood_tokens(new_reqs)
 
@@ -251,7 +255,8 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             logits_sums = logits_sums.tolist()
             res = list(zip(logits_sums, max_equals))
 
-        # self.model.module.train_mode()  # set back to train mode
+        print(res)
+
         return reord.get_original(res)
 
 
