@@ -230,41 +230,40 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
                             self.cache_hook.add_partial("loglikelihood", cache_key, answer)
                         res.append(answer)
                     print("res: ", res)
-
-        if logits is None:
-            # @HACK: To make the eval harness happy on threads that don't have access to the results.
-            #        We just randomly generate some data.
-            res = [(np.random.rand(), np.random.rand()>0.5) for _ in requests]
-            print("random result: ", res)
-        else:
-            print("last stage result: ", res)
-
-        # broadcast results to all ranks
-        if self.is_pipe_parallel:
-            # find the last stage rank
-            src_rank = mpu.get_pipeline_model_parallel_last_rank()
-            if res:
-                logits_sums, max_equals = list(zip(*res))
-                logits_sums = torch.FloatTensor(logits_sums).cuda()
-                max_equals = torch.LongTensor(max_equals).cuda()
+        
+            if len(res) == 0:
+                # @HACK: To make the eval harness happy on threads that don't have access to the results.
+                #        We just randomly generate some data.
+                res = [(np.random.rand(), np.random.rand()>0.5) for _ in requests]
+                print("random result: ", res)
             else:
-                logits_sums = torch.zeros(res_len, dtype=torch.float32).cuda()
-                max_equals = torch.zeros(res_len, dtype=torch.int64).cuda()
-            
-            torch.distributed.broadcast(
-                tensor=logits_sums,
-                src=src_rank,
-                group=mpu.get_pipeline_model_parallel_group(),
-            )
-            torch.distributed.broadcast(
-                tensor=max_equals, src=src_rank, group=mpu.get_pipeline_model_parallel_group()
-            )
-            max_equals = [bool(i) for i in max_equals.tolist()]
-            logits_sums = logits_sums.tolist()
-            res = list(zip(logits_sums, max_equals))
+                print("last stage result: ", res)
+
+            # broadcast results to all ranks
+            if self.is_pipe_parallel:
+                # find the last stage rank
+                src_rank = mpu.get_pipeline_model_parallel_last_rank()
+                if res:
+                    logits_sums, max_equals = list(zip(*res))
+                    logits_sums = torch.FloatTensor(logits_sums).cuda()
+                    max_equals = torch.LongTensor(max_equals).cuda()
+                else:
+                    logits_sums = torch.zeros(res_len, dtype=torch.float32).cuda()
+                    max_equals = torch.zeros(res_len, dtype=torch.int64).cuda()
+                
+                torch.distributed.broadcast(
+                    tensor=logits_sums,
+                    src=src_rank,
+                    group=mpu.get_pipeline_model_parallel_group(),
+                )
+                torch.distributed.broadcast(
+                    tensor=max_equals, src=src_rank, group=mpu.get_pipeline_model_parallel_group()
+                )
+                max_equals = [bool(i) for i in max_equals.tolist()]
+                logits_sums = logits_sums.tolist()
+                res = list(zip(logits_sums, max_equals))
 
         print("broadcast results: ", res)
-
         return reord.get_original(res)
 
 
