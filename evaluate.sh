@@ -12,11 +12,22 @@ TOKENIZER_ARGS=(
 MODEL_ARGS=(
     --use-checkpoint-args
     --use-mcore-models
-    --no-load-rng
+    --tensor-model-parallel-size 2
+    --pipeline-model-parallel-size 4
+    --expert-model-parallel-size 2
+    --decoder-first-pipeline-num-layers 6
+    --decoder-last-pipeline-num-layers 6
+    --context-parallel-size 1
+    --expert-tensor-parallel-size 1
     --bf16
-    --tensor-model-parallel-size 1
-    # --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_finewebedu_0214_mid_core
-    --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/moe_64exp_tiny_dclm_1T_128node_0222_test
+    --sequence-parallel
+    --ckpt-format torch
+    --qk-layernorm
+    --moe-router-enable-expert-bias
+    --moe-router-bias-update-rate 0.001
+    --moe-router-score-function sigmoid
+    # --distributed-timeout-minutes 120
 )
 
 INFERENCE_SPECIFIC_ARGS=(
