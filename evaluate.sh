@@ -43,7 +43,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --micro-batch-size 8
     # --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_dclm.json
     --results-path /mnt/mydata/klyang/results_olmo_replicate.json
-    --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
+    --task-list openbookqa
     # --task-list mmlu
     --num-fewshot 0
     --trust-remote-code
