@@ -134,7 +134,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
 
             if len(new_reqs) >= 10:
                 try:
-                    print(new_reqs[0][0][0].shape)
+                    print(new_reqs[0])
                     break
                 except:
                     break
@@ -232,6 +232,8 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             #        We just randomly generate some data.
             res = [(np.random.rand(), np.random.rand()>0.5) for _ in requests]
 
+        print("random result: ", res)
+
         # broadcast results to all ranks
         if self.is_pipe_parallel:
             # find the last stage rank
@@ -255,7 +257,7 @@ class EvalHarnessAdaptor(lm_eval.api.model.LM):
             logits_sums = logits_sums.tolist()
             res = list(zip(logits_sums, max_equals))
 
-        print(res)
+        print("broadcast results: ", res)
 
         return reord.get_original(res)
 
