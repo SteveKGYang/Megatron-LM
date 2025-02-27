@@ -25,10 +25,10 @@ INFERENCE_SPECIFIC_ARGS=(
     --micro-batch-size 8
     --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_nemotron_mmlu_continuation.json
     # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
-    # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
+    --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list gsm8k
-    --task-list mmlu_continuation
-    --num-fewshot 5
+    # --task-list mmlu_continuation
+    --num-fewshot 0
     --trust-remote-code
 )
 
