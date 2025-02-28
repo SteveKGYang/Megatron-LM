@@ -15,7 +15,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_nemotron_tp1_core
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_continue_math_only_0227_tp1_core
     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
 )
 
