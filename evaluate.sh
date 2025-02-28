@@ -23,7 +23,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
     --micro-batch-size 8
-    --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_nemotron_other.json
+    --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_dclm_math_continue_mmlu_gsm8k.json
     # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     --task-list gsm8k,mmlu_continuation
