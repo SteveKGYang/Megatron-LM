@@ -1,8 +1,8 @@
 #!/bin/bash
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_nemotron_0217/'
-TARGET_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_nemotron_tp1_core/'
+LOAD_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_continue_math_only_0227/'
+TARGET_DIR='/mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_continue_math_only_0227_tp1_core/'
 
 PATTERN="tokenizer*.json"
 
