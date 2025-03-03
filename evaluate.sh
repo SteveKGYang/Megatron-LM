@@ -15,19 +15,18 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_dclm_continue_math_only_0227_tp1_core
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/regmix/llama_3B_dclm_math_0d5_0m5_1_tp1_core/
     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
 )
 
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 12
-    --results-path /mnt/pvc-blob-nfs/klyang/results_llama3B_dclm_math_continue_mmlu_pro_math.json
+    --micro-batch-size 24
+    --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/0d5_0m5_1.json
     # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-    # --task-list gsm8k,mmlu_continuation
-    --task-list mmlu_pro_math
+    --task-list gsm8k,mmlu_continuation,mmlu_pro_math
     --num-fewshot 5
     --trust-remote-code
 )
@@ -42,7 +41,7 @@ INFERENCE_SPECIFIC_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-accelerate launch --main_process_port 29501 evaluate.py \
+accelerate launch --main_process_port 29500 evaluate.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]}
