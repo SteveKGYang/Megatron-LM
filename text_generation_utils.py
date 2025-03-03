@@ -486,10 +486,7 @@ def generate_samples_from_prompt(
 
             if context_length >= (seq_len // 2):
                 print_rank_0(
-                    "\nWarning! Context length",
-                    context_length,
-                    "\nPlease give smaller context (e.g. half of the "
-                    "max sequence length)!",
+                    "\nWarning! Context length {}\n Please give smaller context (e.g. half of the max sequence length)!".format(context_length)
                 )
         if not mpu.get_tensor_model_parallel_rank() == 0:
             context_tokens = tokenizer.tokenize("EMPTY TEXT")
