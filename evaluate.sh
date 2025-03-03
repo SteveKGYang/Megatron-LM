@@ -22,7 +22,7 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 16
+    --micro-batch-size 12
     --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/1.json
     # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
