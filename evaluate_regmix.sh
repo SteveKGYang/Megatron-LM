@@ -41,7 +41,7 @@ TOKENIZER_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-for split_id in $(seq 4 $((5))); do
+for split_id in $(seq 4 $((64))); do
     
     MODEL_ARGS=(
         --use-checkpoint-args
@@ -59,7 +59,7 @@ for split_id in $(seq 4 $((5))); do
         --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-        --task-list gsm8k,mmlu_continuation,mmlu_pro_math
+        --task-list gsm8k,mmlu_continuation
         # --task-list gsm8k,mmlu_pro_math
         --num-fewshot 3
         --trust-remote-code
