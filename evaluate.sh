@@ -26,7 +26,8 @@ INFERENCE_SPECIFIC_ARGS=(
     --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
     # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-    --task-list gsm8k,mmlu_continuation,mmlu_pro_math
+    # --task-list gsm8k,mmlu_continuation,mmlu_pro_math
+    --task-list mmlu_pro_math
     --num-fewshot 5
     --trust-remote-code
 )
@@ -41,7 +42,7 @@ INFERENCE_SPECIFIC_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-accelerate launch --main_process_port 29501 evaluate.py \
+accelerate launch --main_process_port 29502 evaluate.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]}

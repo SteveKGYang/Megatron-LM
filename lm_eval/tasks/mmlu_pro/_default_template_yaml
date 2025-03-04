@@ -1,5 +1,5 @@
 dataset_path: TIGER-Lab/MMLU-Pro
-test_split: test
+test_split: validation
 fewshot_split: validation
 fewshot_config:
   sampler: first_n
