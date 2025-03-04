@@ -44,12 +44,12 @@ INFERENCE_SPECIFIC_ARGS=(
 for split_id in $(seq 4 $((64))); do
     
     MODEL_ARGS=(
-    --use-checkpoint-args
-    --use-mcore-models
-    --no-load-rng
-    --bf16
-    --tensor-model-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/regmix/llama_3B_dclm_math_$split_id/
+        --use-checkpoint-args
+        --use-mcore-models
+        --no-load-rng
+        --bf16
+        --tensor-model-parallel-size 1
+        --load /mnt/pvc-blob-nfs/klyang/tuning_result/regmix/llama_3B_dclm_math_$split_id/
     )
 
     INFERENCE_SPECIFIC_ARGS=(
@@ -59,8 +59,8 @@ for split_id in $(seq 4 $((64))); do
         --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-        # --task-list gsm8k,mmlu_continuation,mmlu_pro_math
-        --task-list gsm8k,mmlu_pro_math
+        --task-list gsm8k,mmlu_continuation,mmlu_pro_math
+        # --task-list gsm8k,mmlu_pro_math
         --num-fewshot 3
         --trust-remote-code
     )
