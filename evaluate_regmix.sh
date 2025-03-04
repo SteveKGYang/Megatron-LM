@@ -41,7 +41,7 @@ TOKENIZER_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-for split_id in $(seq 4 $((64))); do
+for split_id in $(seq 4 $((5))); do
     
     MODEL_ARGS=(
         --use-checkpoint-args
@@ -65,7 +65,10 @@ for split_id in $(seq 4 $((64))); do
         --trust-remote-code
     )
 
-    accelerate launch --main_process_port 29500 evaluate.py \
+    echo ${MODEL_ARGS[@]}
+    echo ${INFERENCE_SPECIFIC_ARGS[@]}
+
+    accelerate launch --main_process_port 29502 evaluate.py \
         ${TOKENIZER_ARGS[@]} \
         ${MODEL_ARGS[@]} \
         ${INFERENCE_SPECIFIC_ARGS[@]}
