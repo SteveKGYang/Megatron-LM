@@ -61,7 +61,7 @@ for split_id in $(seq 4 $((64))); do
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
         --task-list gsm8k,mmlu_continuation,mmlu_pro_math
         # --task-list gsm8k,mmlu_pro_math
-        --num-fewshot 3
+        --num-fewshot 5
         --trust-remote-code
     )
 
