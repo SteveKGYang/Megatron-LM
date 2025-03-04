@@ -41,7 +41,7 @@ INFERENCE_SPECIFIC_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-for split_id in $(seq 4 $((64))); do
+for split_id in $(seq 4 $((5))); do
     
     MODEL_ARGS=(
     --use-checkpoint-args
