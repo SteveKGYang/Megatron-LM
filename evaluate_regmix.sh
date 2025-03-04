@@ -59,7 +59,8 @@ for split_id in $(seq 4 $((64))); do
         --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-        --task-list gsm8k,mmlu_continuation,mmlu_pro_math
+        # --task-list gsm8k,mmlu_continuation,mmlu_pro_math
+        --task-list gsm8k
         --num-fewshot 3
         --trust-remote-code
     )
