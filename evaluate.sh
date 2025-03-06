@@ -15,7 +15,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_nemotron_HQ_0303_tp1_core/
+    --load /mnt/pvc-blob-nfs/klyang/tuning_result/llama_3B_data_evaluation_Phi_0305/
     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
 )
 
@@ -24,7 +24,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --hidden-dropout 0.0
     --micro-batch-size 12
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/mydata/klyang/llama_3B_data_evaluation_nemotron_HQ_0303_zero_shot.json
+    --results-path /mnt/pvc-blob-nfs/klyang/llama_3B_data_evaluation_Phi_0305_90K_zero_shot.json
     --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list gsm8k,mmlu_continuation,mmlu_pro_math
     # --task-list gsm8k,mmlu_continuation,mmlu_pro
