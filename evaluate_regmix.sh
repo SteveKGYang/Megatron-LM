@@ -56,7 +56,7 @@ for split_id in $(seq 4 $((4))); do
         --attention-dropout 0.0
         --hidden-dropout 0.0
         --micro-batch-size 12
-        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results/test_$split_id.json
+        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results/test_gsm8k_$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
         # --task-list gsm8k,mmlu_continuation
