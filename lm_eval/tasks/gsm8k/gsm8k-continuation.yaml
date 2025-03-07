@@ -1,0 +1,15 @@
+tag:
+  - math_word_problems
+task: gsm8k
+dataset_path: gsm8k
+dataset_name: main
+output_type: multiple_choice
+training_split: train
+fewshot_split: train
+test_split: test
+doc_to_text: "Question: {{question}}\nAnswer:"
+doc_to_choice: "{{answer}}"
+doc_to_target: "{{answer}}" #" {{answer.split('### ')[-1].rstrip()}}"
+num_fewshot: 5
+metadata:
+  version: 1.0
