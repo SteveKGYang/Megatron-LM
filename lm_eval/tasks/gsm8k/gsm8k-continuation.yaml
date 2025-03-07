@@ -8,7 +8,7 @@ training_split: train
 fewshot_split: train
 test_split: test
 doc_to_text: "Question: {{question}}\nAnswer:"
-doc_to_choice: "{{answer}}"
+doc_to_choice: "[{answer}]"
 doc_to_target: "{{answer}}" #" {{answer.split('### ')[-1].rstrip()}}"
 num_fewshot: 0
 metadata:
