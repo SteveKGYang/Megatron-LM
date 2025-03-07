@@ -56,11 +56,11 @@ for split_id in $(seq 4 $((64))); do
         --attention-dropout 0.0
         --hidden-dropout 0.0
         --micro-batch-size 12
-        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results/gsm8k_$split_id.json
+        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results/mmlu_$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
         # --task-list gsm8k,mmlu_continuation
-        --task-list gsm8k_continuation
+        --task-list mmlu_continuation
         --num-fewshot 5
         --trust-remote-code
     )
@@ -68,7 +68,7 @@ for split_id in $(seq 4 $((64))); do
     echo ${MODEL_ARGS[@]}
     echo ${INFERENCE_SPECIFIC_ARGS[@]}
 
-    accelerate launch --main_process_port 29500 evaluate_regmix.py \
+    accelerate launch --main_process_port 29501 evaluate_regmix.py \
         ${TOKENIZER_ARGS[@]} \
         ${MODEL_ARGS[@]} \
         ${INFERENCE_SPECIFIC_ARGS[@]}
