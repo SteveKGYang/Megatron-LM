@@ -1305,6 +1305,9 @@ class ConfigurableTask(Task):
             doc_to_choice = self.config.doc_to_choice
 
         if isinstance(doc_to_choice, str):
+            if doc_to_choice == "gsm8k_continuation":
+                print("a")
+                return [doc['answer']]
             if doc_to_choice in self.features:
                 return doc[doc_to_choice]
             else:
