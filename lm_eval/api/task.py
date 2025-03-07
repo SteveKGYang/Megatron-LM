@@ -1308,6 +1308,7 @@ class ConfigurableTask(Task):
             if doc_to_choice in self.features:
                 return doc[doc_to_choice]
             else:
+                print(doc)
                 return ast.literal_eval(utils.apply_template(doc_to_choice, doc))
         elif isinstance(doc_to_choice, list):
             return doc_to_choice
