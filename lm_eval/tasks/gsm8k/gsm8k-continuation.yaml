@@ -1,6 +1,6 @@
 tag:
   - math_word_problems
-task: gsm8k
+task: gsm8k_continuation
 dataset_path: gsm8k
 dataset_name: main
 output_type: multiple_choice
