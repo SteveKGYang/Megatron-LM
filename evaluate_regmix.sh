@@ -60,7 +60,7 @@ for split_id in $(seq 4 $((4))); do
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
         # --task-list gsm8k,mmlu_continuation
-        --task-list mmlu_continuation
+        --task-list gsm8k_continuation
         --num-fewshot 5
         --trust-remote-code
     )
