@@ -41,7 +41,7 @@ TOKENIZER_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-for split_id in $(seq 4 $((64))); do
+for split_id in $(seq 4 $((5))); do
     
     MODEL_ARGS=(
         --use-checkpoint-args
@@ -49,26 +49,26 @@ for split_id in $(seq 4 $((64))); do
         --no-load-rng
         --bf16
         --tensor-model-parallel-size 1
-        --load /mnt/pvc-blob-nfs/klyang/tuning_result/regmix/llama_3B_dclm_math_$split_id/
+        --load /mnt/blob-hptrainingwesteurope-pretraining/regmix/llama_3B_dclm_math_$split_id/
     )
 
     INFERENCE_SPECIFIC_ARGS=(
         --attention-dropout 0.0
         --hidden-dropout 0.0
         --micro-batch-size 12
-        --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/$split_id.json
+        --results-path /mnt/blob-hptrainingwesteurope-pretraining/regmix_results/test_$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-        --task-list gsm8k,mmlu_continuation
-        # --task-list gsm8k,mmlu_pro_math
-        --num-fewshot 3
+        # --task-list gsm8k,mmlu_continuation
+        --task-list mmlu_continuation_stem
+        --num-fewshot 5
         --trust-remote-code
     )
 
     echo ${MODEL_ARGS[@]}
     echo ${INFERENCE_SPECIFIC_ARGS[@]}
 
-    accelerate launch --main_process_port 29500 evaluate.py \
+    accelerate launch --main_process_port 29500 evaluate_regmix.py \
         ${TOKENIZER_ARGS[@]} \
         ${MODEL_ARGS[@]} \
         ${INFERENCE_SPECIFIC_ARGS[@]}
