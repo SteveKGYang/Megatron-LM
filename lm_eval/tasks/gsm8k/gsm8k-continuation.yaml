@@ -10,6 +10,6 @@ test_split: test
 doc_to_text: "Question: {{question}}\nAnswer:"
 doc_to_choice: "{{answer}}"
 doc_to_target: "{{answer}}" #" {{answer.split('### ')[-1].rstrip()}}"
-num_fewshot: 5
+num_fewshot: 0
 metadata:
   version: 1.0

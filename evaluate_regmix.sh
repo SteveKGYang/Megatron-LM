@@ -41,7 +41,7 @@ TOKENIZER_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-for split_id in $(seq 4 $((5))); do
+for split_id in $(seq 4 $((4))); do
     
     MODEL_ARGS=(
         --use-checkpoint-args
@@ -61,7 +61,7 @@ for split_id in $(seq 4 $((5))); do
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
         # --task-list gsm8k,mmlu_continuation
         --task-list gsm8k_continuation
-        --num-fewshot 5
+        --num-fewshot 0
         --trust-remote-code
     )
 
