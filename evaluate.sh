@@ -43,7 +43,7 @@ INFERENCE_SPECIFIC_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-accelerate launch --main_process_port 29500 evaluate.py \
+accelerate launch --main_process_port 29501 evaluate.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]}
