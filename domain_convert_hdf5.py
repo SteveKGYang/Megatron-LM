@@ -69,7 +69,7 @@ def write_to_hdf5(split, file_path, data_dict, rank):
         os.makedirs(save_path, exist_ok=True)
         count = 0
         for k in range(0, len(data_dict[item]), max_sample_num_per_file):
-            cur_data = data_dict[item][k:min(i+max_sample_num_per_file, len(data_dict[item]))]
+            cur_data = data_dict[item][k:min(k+max_sample_num_per_file, len(data_dict[item]))]
             with h5py.File(os.path.join(save_path, "rank_{}_{}_{}.hdf5".format(rank, count, len(cur_data))), "w") as f:
                 array = np.stack(data_dict[item], axis=0)
                 f.create_dataset('train', data=array)
@@ -140,7 +140,7 @@ def main():
             print("Processing for {}-th split.".format(i))
         
         # data = load_hdf5_data("/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8/split_0/gsm8k")
-        data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(i)))
+        data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(str(i).zfill(2))))
 
         if accelerator.is_main_process:
             print("Totally {} data points.".format(len(data)))
