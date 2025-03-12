@@ -145,7 +145,7 @@ def main():
         if accelerator.is_main_process:
             print("Totally {} data points.".format(len(data)))
         
-        accelerator.wait_for_everyone()
+        # accelerator.wait_for_everyone()
 
         for j in range(0, len(data), batch_size):
             batch = data[j:min(j+batch_size, len(data))]
