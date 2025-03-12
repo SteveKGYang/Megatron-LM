@@ -15,7 +15,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_nemotron_LQ_0310/
+    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_nemotron_LQ_0310_tp1_core/
     # --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_results/llama_3B_data_evaluation_nemotron_HQ_0303_tp1_core/
     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
 )
