@@ -25,13 +25,19 @@ hdf5_tokenizer_path = "/mnt/blob-hptrainingwesteurope-pretraining/Llama-3-8B"
 
 # DATA_FILE = "/mnt/klyang_data/quality_classification/{}/temperature-1.0".format(TARGET_MODEL)
 # DATA_FILE = "/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8"
-DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/dolmino-mix-1124/math_split_8"
-split_num = 8
+# DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/dolmino-mix-1124/math_split_8"
+DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/DCLM-RAND-1B-split-64"
+source_split_num = 64
+target_split_num = 8
+
+assert source_split_num % target_split_num == 0
+
 max_sample_num_per_file = 30000
 # DATA_FILE = "/home/pretraining/klyang/mount_dir/mount/quality_classification/{}/temperature-1.0".format(TARGET_MODEL)
 
 # SAVE_DIR = "/mnt/klyang_data/filtered_generated_data/{}/temperature-1.0".format(TARGET_MODEL)  # 替换为你需要的模型
-SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/dolmino-mix-1124/math_domain_split_8"  # 替换为你需要的模型
+# SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/dolmino-mix-1124/math_domain_split_8"  # 替换为你需要的模型
+SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/DCLM-RAND-1B-domain-split-8"  # 替换为你需要的模型
 # SAVE_DIR = "/home/pretraining/klyang/mount_dir/mount/filtered_generated_data/{}/temperature-1.0".format(TARGET_MODEL)  # 替换为你需要的模型
 
 # SAVE_DIR = "/home/pretraining/klyang/pretrain_data_mixing/domain_classification/pile/labels_{}.jsonl".format(nu)  # 替换为你需要的模型
@@ -125,12 +131,13 @@ def main():
 
     batch_size = PER_GPU_BATCH_SIZE * num_processes
 
-    for i in range(split_num):
+    domain_split_dict = {}
+    for item in config.label2id.keys():
+        domain_split_dict[item] = []
+
+    for i in range(source_split_num):
         if accelerator.is_main_process:
             print("Processing for {}-th split.".format(i))
-        domain_split_dict = {}
-        for item in config.label2id.keys():
-            domain_split_dict[item] = []
         
         # data = load_hdf5_data("/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8/split_0/gsm8k")
         data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(i)))
@@ -161,8 +168,14 @@ def main():
             for s_id, predicted_domain in zip(ids, predicted_domains):
                 domain_split_dict[predicted_domain].append(s_id)
         
-        write_to_hdf5(i, SAVE_DIR, domain_split_dict, accelerator.process_index)
-        print("Data saved for rank {}".format(accelerator.process_index))
+        if (i+1) % int(source_split_num/target_split_num) == 0:
+            t_split_num = int((i+1)/int(source_split_num/target_split_num))
+            write_to_hdf5(t_split_num, SAVE_DIR, domain_split_dict, accelerator.process_index)
+            domain_split_dict = {}
+            for item in config.label2id.keys():
+                domain_split_dict[item] = []
+
+    print("All data saved for rank {}".format(accelerator.process_index))
 
 if __name__ == "__main__":
     main()
