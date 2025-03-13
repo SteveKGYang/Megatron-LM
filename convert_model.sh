@@ -1,8 +1,8 @@
 #!/bin/bash
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-LOAD_DIR='/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_nemotron_LQ_0310/'
-TARGET_DIR='/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/llama_3B_data_evaluation_nemotron_LQ_0310_tp1_core/'
+LOAD_DIR='/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_dclm_continue_math_reg_mix_0311/'
+TARGET_DIR='/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/llama_3B_data_evaluation_dclm_continue_math_reg_mix_0311_tp1_core/'
 
 PATTERN="tokenizer*.json"
 
