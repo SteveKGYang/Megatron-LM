@@ -80,8 +80,8 @@ def load_hdf5_data(filename, tokenizer):
     data_list = []
     if filename.endswith(".hdf5"):
         print(filename)
-        file_path = os.path.join(dir_name, filename)
-        with h5py.File(file_path, 'r') as hdf5_file:
+        # file_path = os.path.join(dir_name, filename)
+        with h5py.File(filename, 'r') as hdf5_file:
             for item in hdf5_file['train']:
                 decoded_text = tokenizer.decode(item)
                 data_list.append({'text': decoded_text, 'id': item})
