@@ -139,6 +139,11 @@ def main():
         if accelerator.is_main_process:
             print("Processing for {}-th split.".format(i))
         
+        dir_name = os.path.join(DATA_FILE, "split_{}".format(str(i).zfill(2)))
+        hdf5_files = [os.path.join(root, file) for root, _, files in os.walk(dir_name) for file in files]
+
+        for file_name in hdf5_files:
+        
         # data = load_hdf5_data("/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8/split_0/gsm8k")
         data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(str(i).zfill(2))))
 
