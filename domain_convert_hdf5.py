@@ -140,7 +140,7 @@ def main():
             print("Processing for {}-th split.".format(i))
         
         # data = load_hdf5_data("/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8/split_0/gsm8k")
-        data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(str(i).zfill(2))))
+        data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(str(i).zfill(1))))
 
         if accelerator.is_main_process:
             print("Totally {} data points.".format(len(data)))
