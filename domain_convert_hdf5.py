@@ -76,19 +76,15 @@ def write_to_hdf5(split, file_path, data_dict, rank):
             count += 1
         
 
-def load_hdf5_data(dir_name):
-    tokenizer = AutoTokenizer.from_pretrained(hdf5_tokenizer_path)
-
+def load_hdf5_data(filename, tokenizer):
     data_list = []
-    hdf5_files = [os.path.join(root, file) for root, _, files in os.walk(dir_name) for file in files]
-    for filename in hdf5_files:
-        if filename.endswith(".hdf5"):
-            print(filename)
-            file_path = os.path.join(dir_name, filename)
-            with h5py.File(file_path, 'r') as hdf5_file:
-                for item in hdf5_file['train']:
-                    decoded_text = tokenizer.decode(item)
-                    data_list.append({'text': decoded_text, 'id': item})
+    if filename.endswith(".hdf5"):
+        print(filename)
+        file_path = os.path.join(dir_name, filename)
+        with h5py.File(file_path, 'r') as hdf5_file:
+            for item in hdf5_file['train']:
+                decoded_text = tokenizer.decode(item)
+                data_list.append({'text': decoded_text, 'id': item})
     return data_list
                     
 
@@ -118,6 +114,7 @@ def main():
     logger.info("加载 tokenizer...")
     config = AutoConfig.from_pretrained(MODEL_NAME)
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    hdf5_tokenizer = AutoTokenizer.from_pretrained(hdf5_tokenizer_path)
     
     logger.info("加载模型并分配设备...")
     model = CustomModel.from_pretrained(MODEL_NAME)
@@ -135,7 +132,7 @@ def main():
     for item in config.label2id.keys():
         domain_split_dict[item] = []
 
-    for i in range(7, source_split_num):
+    for i in range(source_split_num):
         if accelerator.is_main_process:
             print("Processing for {}-th split.".format(i))
         
@@ -143,35 +140,28 @@ def main():
         hdf5_files = [os.path.join(root, file) for root, _, files in os.walk(dir_name) for file in files]
 
         for file_name in hdf5_files:
-        
-        # data = load_hdf5_data("/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8/split_0/gsm8k")
-        data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(str(i).zfill(2))))
+            data = load_hdf5_data(file_name, hdf5_tokenizer)
 
-        if accelerator.is_main_process:
-            print("Totally {} data points.".format(len(data)))
-        
-        # accelerator.wait_for_everyone()
+            for j in range(0, len(data), batch_size):
+                batch = data[j:min(j+batch_size, len(data))]
 
-        for j in range(0, len(data), batch_size):
-            batch = data[j:min(j+batch_size, len(data))]
+                if accelerator.is_main_process:
+                    print("{}/{} instances processed.".format(j+1, len(data)))
 
-            if accelerator.is_main_process:
-                print("{}/{} instances processed.".format(j+1, len(data)))
+                with accelerator.split_between_processes(batch) as samples:
+                    # print("num_samples: {}".format(len(samples)))
+                    ids = [sample['id'] for sample in samples]
+                    texts = [sample['text'] for sample in samples]
+                    inputs = tokenizer(texts, return_tensors="pt", padding="longest", truncation=True).to("cuda:{}".format(accelerator.process_index))
 
-            with accelerator.split_between_processes(batch) as samples:
-                # print("num_samples: {}".format(len(samples)))
-                ids = [sample['id'] for sample in samples]
-                texts = [sample['text'] for sample in samples]
-                inputs = tokenizer(texts, return_tensors="pt", padding="longest", truncation=True).to("cuda:{}".format(accelerator.process_index))
+                outputs = model(inputs["input_ids"], inputs["attention_mask"])
 
-            outputs = model(inputs["input_ids"], inputs["attention_mask"])
+                predicted_classes = torch.argmax(outputs, dim=1)
+                predicted_domains = [config.id2label[class_idx.item()] for class_idx in predicted_classes.cpu().numpy()]
+                assert len(ids) == len(predicted_domains)
 
-            predicted_classes = torch.argmax(outputs, dim=1)
-            predicted_domains = [config.id2label[class_idx.item()] for class_idx in predicted_classes.cpu().numpy()]
-            assert len(ids) == len(predicted_domains)
-
-            for s_id, predicted_domain in zip(ids, predicted_domains):
-                domain_split_dict[predicted_domain].append(s_id)
+                for s_id, predicted_domain in zip(ids, predicted_domains):
+                    domain_split_dict[predicted_domain].append(s_id)
         
         if (i+1) % int(source_split_num/target_split_num) == 0:
             t_split_num = int((i+1)/int(source_split_num/target_split_num))-1
