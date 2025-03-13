@@ -25,9 +25,9 @@ hdf5_tokenizer_path = "/mnt/blob-hptrainingwesteurope-pretraining/Llama-3-8B"
 
 # DATA_FILE = "/mnt/klyang_data/quality_classification/{}/temperature-1.0".format(TARGET_MODEL)
 # DATA_FILE = "/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8"
-DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/dolmino-mix-1124/math_split_8"
-# DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/fineweb-edu-RAND-100B-split-64"
-source_split_num = 8
+# DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/dolmino-mix-1124/math_split_8"
+DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/fineweb-edu-RAND-100B-split-64"
+source_split_num = 64
 target_split_num = 8
 
 assert source_split_num % target_split_num == 0
@@ -36,8 +36,8 @@ max_sample_num_per_file = 30000
 # DATA_FILE = "/home/pretraining/klyang/mount_dir/mount/quality_classification/{}/temperature-1.0".format(TARGET_MODEL)
 
 # SAVE_DIR = "/mnt/klyang_data/filtered_generated_data/{}/temperature-1.0".format(TARGET_MODEL)  # 替换为你需要的模型
-SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/dolmino-mix-1124/math_domain_split_8"  # 替换为你需要的模型
-# SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/fineweb-edu-RAND-100B-domain-split-8"  # 替换为你需要的模型
+# SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/dolmino-mix-1124/math_domain_split_8"  # 替换为你需要的模型
+SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/fineweb-edu-RAND-100B-domain-split-8"  # 替换为你需要的模型
 # SAVE_DIR = "/home/pretraining/klyang/mount_dir/mount/filtered_generated_data/{}/temperature-1.0".format(TARGET_MODEL)  # 替换为你需要的模型
 
 # SAVE_DIR = "/home/pretraining/klyang/pretrain_data_mixing/domain_classification/pile/labels_{}.jsonl".format(nu)  # 替换为你需要的模型
@@ -140,7 +140,7 @@ def main():
             print("Processing for {}-th split.".format(i))
         
         # data = load_hdf5_data("/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8/split_0/gsm8k")
-        data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(str(i).zfill(1))))
+        data = load_hdf5_data(os.path.join(DATA_FILE, "split_{}".format(str(i).zfill(2))))
 
         if accelerator.is_main_process:
             print("Totally {} data points.".format(len(data)))
