@@ -5,7 +5,7 @@ from typing import Dict, List, Optional
 
 import datasets
 
-from lm_eval.utils import eval_logger
+# from lm_eval.utils import eval_logger
 
 
 try:
@@ -165,13 +165,13 @@ def is_equiv(x1: str, x2: str) -> bool:
                 sympy.SympifyError,
                 TypeError,
             ):
-                eval_logger.debug(f"couldn't parse one of {x1} or {x2}")
+                # eval_logger.debug(f"couldn't parse one of {x1} or {x2}")
                 return False
 
             try:
                 diff = parsed_x1 - parsed_x2
             except TypeError:
-                eval_logger.debug(f"couldn't subtract {x1} and {x2}")
+                # eval_logger.debug(f"couldn't subtract {x1} and {x2}")
                 return False
 
             try:
@@ -180,17 +180,18 @@ def is_equiv(x1: str, x2: str) -> bool:
                 else:
                     return False
             except ValueError:
-                eval_logger.debug(
-                    f"Had some trouble simplifying when comparing {x1} and {x2}"
-                )
+                pass
+                # eval_logger.debug(
+                #     f"Had some trouble simplifying when comparing {x1} and {x2}"
+                # )
     except TimeoutError:
-        eval_logger.debug(f"Timed out comparing {x1} and {x2}")
+        # eval_logger.debug(f"Timed out comparing {x1} and {x2}")
         return False
     except ImportError as e:
-        eval_logger.error(e)
+        # eval_logger.error(e)
         raise
     except Exception as e:
-        eval_logger.debug(f"Failed comparing {x1} and {x2} with {e}")
+        # eval_logger.debug(f"Failed comparing {x1} and {x2} with {e}")
         return False
 
 
