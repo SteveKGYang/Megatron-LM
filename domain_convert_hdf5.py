@@ -25,10 +25,10 @@ hdf5_tokenizer_path = "/mnt/blob-hptrainingwesteurope-pretraining/Llama-3-8B"
 
 # DATA_FILE = "/mnt/klyang_data/quality_classification/{}/temperature-1.0".format(TARGET_MODEL)
 # DATA_FILE = "/home/pretraining/klyang/mount_dir/mount/dolmino-mix-1124/math_split_8"
-DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/dolmino-mix-1124/math_RAND_1B_split_8"
+# DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/dolmino-mix-1124/math_RAND_1B_split_8"
 # DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/DCLM-RAND-100B-split-64"
-# DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/nemotron-1.0-HQ-RAND-100B-split-128"
-source_split_num = 8
+DATA_FILE = "/mnt/blob-hptrainingwesteurope-pretraining/fineweb-edu-RAND-100B-split-64"
+source_split_num = 64
 target_split_num = 8
 
 assert source_split_num % target_split_num == 0
@@ -37,7 +37,7 @@ max_sample_num_per_file = 30000
 # DATA_FILE = "/home/pretraining/klyang/mount_dir/mount/quality_classification/{}/temperature-1.0".format(TARGET_MODEL)
 
 # SAVE_DIR = "/mnt/klyang_data/filtered_generated_data/{}/temperature-1.0".format(TARGET_MODEL)  # 替换为你需要的模型
-SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/dolmino-mix-1124/math_RAND_1B_domain_split_8"  # 替换为你需要的模型
+SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/dolmino-mix-1124/fineweb-edu-RAND-100B-domain-split-8"  # 替换为你需要的模型
 # SAVE_DIR = "/mnt/blob-hptrainingwesteurope-pretraining-out/nemotron-1.0-HQ-RAND-100B-domain-split-8"  # 替换为你需要的模型
 # SAVE_DIR = "/home/pretraining/klyang/mount_dir/mount/filtered_generated_data/{}/temperature-1.0".format(TARGET_MODEL)  # 替换为你需要的模型
 
