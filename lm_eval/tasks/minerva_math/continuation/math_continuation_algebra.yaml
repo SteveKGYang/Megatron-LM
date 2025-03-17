@@ -1,6 +1,6 @@
 tag:
   - math_word_problems
-task: math_continuation
+task: minerva_math_continuation_algebra
 dataset_path: EleutherAI/hendrycks_math
 dataset_name: 
   - algebra
