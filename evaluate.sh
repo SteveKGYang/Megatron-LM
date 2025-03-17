@@ -29,7 +29,7 @@ INFERENCE_SPECIFIC_ARGS=(
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list gsm8k,mmlu_pro_math
     # --task-list minerva_math
-    --task-list math_continuation_algebra
+    --task-list math_continuation
     # --task-list mmlu_continuation,mmlu
     --num-fewshot 0
     --trust-remote-code
