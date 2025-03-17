@@ -4,7 +4,7 @@ task: math_continuation
 dataset_path: EleutherAI/hendrycks_math
 output_type: multiple_choice
 training_split: train
-test_split: test
+test_split: train
 doc_to_text: !function utils.doc_to_text
 doc_to_choice: "math_continuation"
 doc_to_target: "{{solution}}"
