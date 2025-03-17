@@ -935,7 +935,10 @@ class ConfigurableTask(Task):
                 path=self.DATASET_PATH,
                 name=name,
                 **dataset_kwargs if dataset_kwargs is not None else {},))
-            self.dataset = datasets.concatenate_datasets(dataset_list)
+            merged_train = datasets.concatenate_datasets([dataset['train'] for dataset in dataset_list])
+            merged_test = datasets.concatenate_datasets([dataset['test'] for dataset in dataset_list])
+
+            self.dataset = datasets.DatasetDict({"train": merged_train, "test": merged_test})
         else:
             self.dataset = datasets.load_dataset(
             path=self.DATASET_PATH,
