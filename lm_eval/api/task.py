@@ -928,9 +928,14 @@ class ConfigurableTask(Task):
 
     def download(self, dataset_kwargs: Optional[Dict[str, Any]] = None) -> None:
         if self.config.task == "math_continuation":
-            self.dataset = datasets.load_dataset(
-            path=self.DATASET_PATH,
-            **dataset_kwargs if dataset_kwargs is not None else {},)
+            dataset_names = ['algebra', 'counting_and_probability', 'geometry', 'intermediate_algebra', 'number_theory', 'prealgebra', 'precalculus']
+            dataset_list = []
+            for name in dataset_names:
+                dataset_list.append(datasets.load_dataset(
+                path=self.DATASET_PATH,
+                name=name,
+                **dataset_kwargs if dataset_kwargs is not None else {},))
+            self.dataset = datasets.concatenate_datasets(dataset_list)
         else:
             self.dataset = datasets.load_dataset(
             path=self.DATASET_PATH,
