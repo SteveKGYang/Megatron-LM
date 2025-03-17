@@ -28,9 +28,10 @@ INFERENCE_SPECIFIC_ARGS=(
     --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_data_evaluation_dclm_minerva_math_48K.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list gsm8k,mmlu_pro_math
-    --task-list minerva_math
+    # --task-list minerva_math
+    --task-list math_continuation
     # --task-list mmlu_continuation,mmlu
-    --num-fewshot 4
+    --num-fewshot 0
     --trust-remote-code
 )
 
