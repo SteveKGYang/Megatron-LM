@@ -1,8 +1,10 @@
 tag:
   - math_word_problems
-task: math_continuation_algebra
+task: math_continuation
 dataset_path: EleutherAI/hendrycks_math
-dataset_name: algebra
+dataset_name: 
+  - algebra
+  - counting_and_probability
 output_type: multiple_choice
 training_split: train
 test_split: test
