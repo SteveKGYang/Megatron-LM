@@ -8,7 +8,7 @@ TOKENIZER_ARGS=(
     --tokenizer-type HuggingFaceTokenizer
 )
 
-for split_id in $(seq 0 $((267))); do
+for split_id in $(seq 8 $((18))); do
     
     MODEL_ARGS=(
         --use-checkpoint-args
@@ -22,13 +22,13 @@ for split_id in $(seq 0 $((267))); do
     INFERENCE_SPECIFIC_ARGS=(
         --attention-dropout 0.0
         --hidden-dropout 0.0
-        --micro-batch-size 4
-        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results_nvidia_dclm_math/mmlu_$split_id.json
+        --micro-batch-size 16
+        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results_nvidia_dclm_math/math_$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-        --task-list mmlu_continuation
-        # --task-list math_continuation
-        --num-fewshot 5
+        # --task-list mmlu_continuation
+        --task-list math_continuation
+        --num-fewshot 4
         --trust-remote-code
     )
 
