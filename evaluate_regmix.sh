@@ -28,7 +28,7 @@ for split_id in $(seq 0 $((267))); do
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
         --task-list mmlu_continuation
         # --task-list math_continuation
-        --num-fewshot 5
+        --num-fewshot 4
         --trust-remote-code
     )
 
