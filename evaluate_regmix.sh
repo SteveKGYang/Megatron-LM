@@ -5,41 +5,8 @@ export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 TOKENIZER_ARGS=(
     --tokenizer-model /mnt/blob-hptrainingwesteurope-pretraining/Llama-3-8B
-    # --tokenizer-model /mnt/mydata/klyang/GK4V16-Q6144-C4096-M10B-lr5e-5-B16M-Phiv2-1016-retry4-90k
     --tokenizer-type HuggingFaceTokenizer
 )
-
-# MODEL_ARGS=(
-#     --use-checkpoint-args
-#     --use-mcore-models
-#     --no-load-rng
-#     --bf16
-#     --tensor-model-parallel-size 1
-#     --load /mnt/pvc-blob-nfs/klyang/tuning_result/regmix/llama_3B_dclm_math_0d7_0m3_2/
-#     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
-# )
-
-# INFERENCE_SPECIFIC_ARGS=(
-#     --attention-dropout 0.0
-#     --hidden-dropout 0.0
-#     --micro-batch-size 12
-#     --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-#     # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
-#     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-#     --task-list gsm8k,mmlu_continuation,mmlu_pro_math
-#     --num-fewshot 5
-#     --trust-remote-code
-# )
-
-# torchrun --nproc-per-node=4 evaluate.py \
-#     ${TOKENIZER_ARGS[@]} \
-#     ${MODEL_ARGS[@]} \
-#     ${INFERENCE_SPECIFIC_ARGS[@]}
-
-#  /root/.local/bin/accelerate launch evaluate.py \
-#     ${TOKENIZER_ARGS[@]} \
-#     ${MODEL_ARGS[@]} \
-#     ${INFERENCE_SPECIFIC_ARGS[@]}
 
 for split_id in $(seq 0 $((267))); do
     
@@ -55,13 +22,13 @@ for split_id in $(seq 0 $((267))); do
     INFERENCE_SPECIFIC_ARGS=(
         --attention-dropout 0.0
         --hidden-dropout 0.0
-        --micro-batch-size 16
-        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results_nvidia_dclm_math/math_$split_id.json
+        --micro-batch-size 8
+        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results_nvidia_dclm_math/mmlu_$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-        # --task-list gsm8k,mmlu_continuation
-        --task-list math_continuation
-        --num-fewshot 4
+        --task-list mmlu_continuation
+        # --task-list math_continuation
+        --num-fewshot 5
         --trust-remote-code
     )
 
