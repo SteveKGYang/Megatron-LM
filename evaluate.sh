@@ -23,15 +23,15 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 16
+    --micro-batch-size 6
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160M_dclm_data_evaluation_0322_other.json
+    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160M_dclm_data_evaluation_0322_math.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list gsm8k,mmlu_pro_math
-    # --task-list minerva_math
+    --task-list minerva_math,gsm8k
     # --task-list math_continuation
-    --task-list mmlu_continuation,mmlu
-    --num-fewshot 5
+    # --task-list mmlu_continuation,mmlu
+    --num-fewshot 4
     --trust-remote-code
 )
 
@@ -45,7 +45,7 @@ INFERENCE_SPECIFIC_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-accelerate launch --main_process_port 29501 evaluate.py \
+accelerate launch --main_process_port 29502 evaluate.py \
     ${TOKENIZER_ARGS[@]} \
     ${MODEL_ARGS[@]} \
     ${INFERENCE_SPECIFIC_ARGS[@]}
