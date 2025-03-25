@@ -8,7 +8,7 @@ TOKENIZER_ARGS=(
     --tokenizer-type HuggingFaceTokenizer
 )
 
-for split_id in $(seq 47 $((101))); do
+for split_id in $(seq 201 $((267))); do
     
     MODEL_ARGS=(
         --use-checkpoint-args
