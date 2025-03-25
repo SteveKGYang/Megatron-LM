@@ -8,7 +8,7 @@ TOKENIZER_ARGS=(
     --tokenizer-type HuggingFaceTokenizer
 )
 
-for split_id in $(seq 18 $((100))); do
+for split_id in $(seq 47 $((101))); do
     
     MODEL_ARGS=(
         --use-checkpoint-args
@@ -22,7 +22,7 @@ for split_id in $(seq 18 $((100))); do
     INFERENCE_SPECIFIC_ARGS=(
         --attention-dropout 0.0
         --hidden-dropout 0.0
-        --micro-batch-size 12
+        --micro-batch-size 6
         --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results_nvidia_dclm_math/math_$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
@@ -35,7 +35,7 @@ for split_id in $(seq 18 $((100))); do
     echo ${MODEL_ARGS[@]}
     echo ${INFERENCE_SPECIFIC_ARGS[@]}
 
-    accelerate launch --main_process_port 29501 evaluate_regmix.py \
+    accelerate launch --main_process_port 29502 evaluate_regmix.py \
         ${TOKENIZER_ARGS[@]} \
         ${MODEL_ARGS[@]} \
         ${INFERENCE_SPECIFIC_ARGS[@]}
