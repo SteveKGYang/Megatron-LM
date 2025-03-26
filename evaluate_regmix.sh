@@ -23,7 +23,7 @@ for split_id in $(seq 144 $((267))); do
         --attention-dropout 0.0
         --hidden-dropout 0.0
         --micro-batch-size 16
-        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results_nvidia_dclm_math/math_$split_id.json
+        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results_nvidia_dclm_math/mmlu_$split_id.json
         # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
         # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
         --task-list mmlu_continuation
