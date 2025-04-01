@@ -1,11 +1,17 @@
-# export CUDA_VISIBLE_DEVICES=0,1,2,3
 export CUDA_DEVICE_MAX_CONNECTIONS=1
-# alias python='/root/.local/lib/python3.12'
-# test
 
-# export TARGET_TRAJECTORY_DIR=/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/llama_3B_data_sampling_dclm_math/top_1_trajectory_0_dynamic_step_71
-export TARGET_TRAJECTORY_DIR=/home/pretraining/klyang/mount_dir/mount/tuning_result/llama_3B_data_sampling_dclm_math/top_1_trajectory_0_dynamic_step_71
-folders=($(find $TARGET_TRAJECTORY_DIR -type d -name "*iter_*"))
+blobkey="?sv=2023-01-03&st=2025-04-01T02%3A00%3A35Z&se=2025-04-08T02%3A00%3A00Z&skoid=568e5914-ecc1-47fe-b4a8-4007497b49e5&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-04-01T02%3A00%3A35Z&ske=2025-04-08T02%3A00%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=TtUUMOBOczhEFd2GgBNDAmsZ0H13YRVUsqhgET6PDtQ%3D"
+
+TRAJECTORY_GROUP=top_1
+TARGET_TRAJECTORY_DIR=top_1_trajectory_0_dynamic_step_71
+
+MODEL_DIR=/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_160m_data_sampling_dclm_math/$TRAJECTORY_GROUP/
+
+folders=($(find $MODEL_DIR$TARGET_TRAJECTORY_DIR -type d -name "*iter_*"))
+model_count=${#folders[@]}
+
+# echo ${folders[0]}
+# echo ${model_count}
 
 TOKENIZER_ARGS=(
     --tokenizer-model /mnt/blob-hptrainingwesteurope-pretraining/Llama-3-8B
@@ -13,11 +19,17 @@ TOKENIZER_ARGS=(
     --tokenizer-type HuggingFaceTokenizer
 )
 
-for ckpt_dir in "${folders[@]}"; do
-    IFS='/' read -ra CKPT_NAME <<< "${ckpt_dir}"
-    IFS='_' read -ra STEP <<< "${CKPT_NAME[-1]}"
-    CUR_STEP=${STEP[-1]}
-    echo $CUR_STEP
+mkdir /scratch/target_model
+chmod 777 /scratch/target_model
+
+# for model_id in $(seq 0 $(($model_count-1))); do
+for model_id in $(seq 0 $((1))); do
+
+    cur_ckpt_dir=${folders[$model_id]}
+    IFS='/' read -ra CKPT_NAME <<< "${cur_ckpt_dir}"
+    ckpt_name=${CKPT_NAME[-1]}
+
+    ./azcopy copy --recursive "https://hptrainingwesteurope.blob.core.windows.net/pretraining/tuning_result/llama_160m_data_sampling_dclm_math/"$TRAJECTORY_GROUP"/"$TARGET_TRAJECTORY_DIR"/"$ckpt_name"/"$blobkey "/scratch/target_model/"
 
     MODEL_ARGS=(
         --use-checkpoint-args
@@ -31,13 +43,10 @@ for ckpt_dir in "${folders[@]}"; do
     INFERENCE_SPECIFIC_ARGS=(
         --attention-dropout 0.0
         --hidden-dropout 0.0
-        --micro-batch-size 12
-        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/regmix_results_test/test_$CUR_STEP.json
-        # --results-path /mnt/mydata/klyang/results_olmo_replicate_mmlu_continuation.json
-        # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-        # --task-list gsm8k,mmlu_continuation
+        --micro-batch-size 16
+        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160m_data_sampling_dclm_math_tra_eval/$TRAJECTORY_GROUP/$TARGET_TRAJECTORY_DIR/$ckpt_name"_"$model_id/math.json
         --task-list math_continuation
-        --num-fewshot 5
+        --num-fewshot 2
         --trust-remote-code
     )
 
