@@ -51,7 +51,7 @@ for model_id in $(seq 0 $(($model_count-1))); do
             --micro-batch-size 8
             --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160m_data_sampling_dclm_math_tra_eval/$TRAJECTORY_GROUP/$TARGET_TRAJECTORY_DIR/$ckpt_name"_"$model_id/mmlu.json
             --task-list mmlu_continuation
-            --num-fewshot 5
+            --num-fewshot 2
             --trust-remote-code
         )
 
