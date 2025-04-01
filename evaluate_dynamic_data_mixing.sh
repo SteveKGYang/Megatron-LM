@@ -22,8 +22,8 @@ TOKENIZER_ARGS=(
 mkdir /scratch/target_model
 chmod 777 /scratch/target_model
 
-# for model_id in $(seq 0 $(($model_count-1))); do
-for model_id in $(seq 0 $((1))); do
+for model_id in $(seq 0 $(($model_count-1))); do
+# for model_id in $(seq 0 $((1))); do
     (
         cur_ckpt_dir=${folders[$model_id]}
         IFS='/' read -ra CKPT_NAME <<< "${cur_ckpt_dir}"
