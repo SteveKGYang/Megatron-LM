@@ -24,37 +24,40 @@ chmod 777 /scratch/target_model
 
 # for model_id in $(seq 0 $(($model_count-1))); do
 for model_id in $(seq 0 $((1))); do
+    (
+        cur_ckpt_dir=${folders[$model_id]}
+        IFS='/' read -ra CKPT_NAME <<< "${cur_ckpt_dir}"
+        ckpt_name=${CKPT_NAME[-1]}
 
-    cur_ckpt_dir=${folders[$model_id]}
-    IFS='/' read -ra CKPT_NAME <<< "${cur_ckpt_dir}"
-    ckpt_name=${CKPT_NAME[-1]}
+        ./azcopy copy --recursive "https://hptrainingwesteurope.blob.core.windows.net/pretraining/tuning_result/llama_160m_data_sampling_dclm_math/"$TRAJECTORY_GROUP"/"$TARGET_TRAJECTORY_DIR"/"$ckpt_name"/"$blobkey "/scratch/target_model/"
 
-    ./azcopy copy --recursive "https://hptrainingwesteurope.blob.core.windows.net/pretraining/tuning_result/llama_160m_data_sampling_dclm_math/"$TRAJECTORY_GROUP"/"$TARGET_TRAJECTORY_DIR"/"$ckpt_name"/"$blobkey "/scratch/target_model/"
+        MODEL_ARGS=(
+            --use-checkpoint-args
+            --use-mcore-models
+            --no-load-rng
+            --bf16
+            --tensor-model-parallel-size 1
+            --load /scratch/target_model/
+        )
 
-    MODEL_ARGS=(
-        --use-checkpoint-args
-        --use-mcore-models
-        --no-load-rng
-        --bf16
-        --tensor-model-parallel-size 1
-        --load /scratch/target_model/
+        INFERENCE_SPECIFIC_ARGS=(
+            --attention-dropout 0.0
+            --hidden-dropout 0.0
+            --micro-batch-size 16
+            --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160m_data_sampling_dclm_math_tra_eval/$TRAJECTORY_GROUP/$TARGET_TRAJECTORY_DIR/$ckpt_name"_"$model_id/math.json
+            --task-list math_continuation
+            --num-fewshot 2
+            --trust-remote-code
+        )
+
+        echo ${MODEL_ARGS[@]}
+        echo ${INFERENCE_SPECIFIC_ARGS[@]}
+
+        accelerate launch --main_process_port 29500 evaluate_regmix.py \
+            ${TOKENIZER_ARGS[@]} \
+            ${MODEL_ARGS[@]} \
+            ${INFERENCE_SPECIFIC_ARGS[@]}
+        
+        rm -rf /scratch/target_model/*
     )
-
-    INFERENCE_SPECIFIC_ARGS=(
-        --attention-dropout 0.0
-        --hidden-dropout 0.0
-        --micro-batch-size 16
-        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160m_data_sampling_dclm_math_tra_eval/$TRAJECTORY_GROUP/$TARGET_TRAJECTORY_DIR/$ckpt_name"_"$model_id/math.json
-        --task-list math_continuation
-        --num-fewshot 2
-        --trust-remote-code
-    )
-
-    echo ${MODEL_ARGS[@]}
-    echo ${INFERENCE_SPECIFIC_ARGS[@]}
-
-    accelerate launch --main_process_port 29500 evaluate_regmix.py \
-        ${TOKENIZER_ARGS[@]} \
-        ${MODEL_ARGS[@]} \
-        ${INFERENCE_SPECIFIC_ARGS[@]}
 done
