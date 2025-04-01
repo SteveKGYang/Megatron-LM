@@ -1,0 +1,75 @@
+description: Megatron job submission for sing
+
+target:
+  service: sing
+  # name: msroctobasicvc
+  # name: msrresrchbasicvc
+  name: msroctovc
+  workspace_name: baltic03wspace
+
+environment:
+  image: superbench:sigma-megatron-with-msccl-large-scale-opt-nccl-2.23
+  # image: huggingface/transformers-pytorch-deepspeed-latest-gpu:latest
+  registry: msraairgroup.azurecr.io # any public registry can be specified here
+  # registry: docker.io # any public registry can be specified here
+  setup:
+    - /usr/bin/python -m pip install h5py --user
+    - /usr/bin/python -m pip install transformers --user
+    - /usr/bin/python -m pip install deepspeed --user
+    - /usr/bin/python -m pip install datasets numpy tensorboard jsonlines ujson --user
+    - /usr/bin/python -m pip install wandb --user
+    # - pip install lm_eval --user
+    - echo "[Used Python Env]"
+    - pip list
+    - echo "[Used Disk]"
+    - df -h
+    - echo "[Mounted Storage]"
+    - ls -alh /mnt/blob-hptrainingwesteurope-pretraining
+    # - ls -alh /mnt/pretrain
+    # - export TORCH_DISTRIBUTED_DEBUG=DETAIL
+
+code:
+  # local directory of the code. this will be uploaded to the server.
+  # $CONFIG_DIR is expanded to the directory of this config file
+  local_dir: $CONFIG_DIR
+  remote_dir: xiaoliu/pretraining/test_keyless3
+
+storage:
+  data:
+    storage_account_name: hptrainingwesteurope
+    container_name: pretraining
+    mount_dir: /mnt/blob-hptrainingwesteurope-pretraining
+  output:
+    storage_account_name: hptrainingwesteurope
+    container_name: pretraining
+    mount_dir: /mnt/blob-hptrainingwesteurope-pretraining-out
+
+jobs:
+- name: evaluate_dclm_continue_math_regmix_nvidia_test_2
+  sku: 1x40G8-A100-NvLink
+  # sla_tier: Standard
+  sla_tier: Premium
+  priority: High
+  # reference: https://amulet-docs.azurewebsites.net/main/advanced/51_distributed.html
+  command:
+  - sudo mkdir /scratch/source_data
+  - sudo chmod 777 /scratch/source_data
+  - sudo mkdir /scratch/target_data
+  - sudo chmod 777 /scratch/target_data
+  - echo "Start evaluation..."
+  - bash evaluate_dynamic_data_mixing.sh
+  - echo "End training..."
+  mpi: False
+  process_count_per_node: 1
+  submit_args:
+    env:
+      {
+        "NCCL_DEBUG": "INFO",
+        "SHARED_MEMORY_PERCENT": 0.05,
+        "_AZUREML_SINGULARITY_JOB_UAI": /subscriptions/d3967d29-68f3-4de2-9a9c-501a4d0a3d57/resourcegroups/azureml/providers/Microsoft.ManagedIdentity/userAssignedIdentities/UAI_baltic03
+      }
+  tags:
+  - Project_Name:AIMicius
+  - ProjectID:PRJ-0419-A47
+  - Experiment:Continual_Pretraining
+  identity: managed
