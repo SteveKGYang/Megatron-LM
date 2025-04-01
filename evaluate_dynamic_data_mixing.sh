@@ -31,6 +31,8 @@ for model_id in $(seq 0 $((1))); do
 
         ./azcopy copy --recursive "https://hptrainingwesteurope.blob.core.windows.net/pretraining/tuning_result/llama_160m_data_sampling_dclm_math/"$TRAJECTORY_GROUP"/"$TARGET_TRAJECTORY_DIR"/"$ckpt_name"/"$blobkey "/scratch/target_model/"
 
+        ls /scratch/target_model
+        
         MODEL_ARGS=(
             --use-checkpoint-args
             --use-mcore-models
