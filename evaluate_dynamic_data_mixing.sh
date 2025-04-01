@@ -48,7 +48,7 @@ for model_id in $(seq 0 $((1))); do
         INFERENCE_SPECIFIC_ARGS=(
             --attention-dropout 0.0
             --hidden-dropout 0.0
-            --micro-batch-size 16
+            --micro-batch-size 12
             --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160m_data_sampling_dclm_math_tra_eval/$TRAJECTORY_GROUP/$TARGET_TRAJECTORY_DIR/$ckpt_name"_"$model_id/mmlu.json
             --task-list mmlu_continuation
             --num-fewshot 5
