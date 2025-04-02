@@ -58,7 +58,7 @@ for model_id in $(seq 0 $(($model_count-1))); do
         echo ${MODEL_ARGS[@]}
         echo ${INFERENCE_SPECIFIC_ARGS[@]}
 
-        accelerate launch --main_process_port 29501 evaluate_regmix.py \
+        accelerate launch --main_process_port 29502 evaluate_regmix.py \
             ${TOKENIZER_ARGS[@]} \
             ${MODEL_ARGS[@]} \
             ${INFERENCE_SPECIFIC_ARGS[@]}
