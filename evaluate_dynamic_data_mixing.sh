@@ -50,7 +50,7 @@ for model_id in $(seq 0 $(($model_count-1))); do
             --hidden-dropout 0.0
             --micro-batch-size 8
             --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160m_data_sampling_dclm_math_tra_eval/$TRAJECTORY_GROUP/$TARGET_TRAJECTORY_DIR/$ckpt_name"_"$model_id/mmlu.json
-            --task-list mmlu_continuation
+            --task-list math_continuation
             --num-fewshot 2
             --trust-remote-code
         )
@@ -58,7 +58,7 @@ for model_id in $(seq 0 $(($model_count-1))); do
         echo ${MODEL_ARGS[@]}
         echo ${INFERENCE_SPECIFIC_ARGS[@]}
 
-        accelerate launch --main_process_port 29500 evaluate_regmix.py \
+        accelerate launch --main_process_port 29501 evaluate_regmix.py \
             ${TOKENIZER_ARGS[@]} \
             ${MODEL_ARGS[@]} \
             ${INFERENCE_SPECIFIC_ARGS[@]}
