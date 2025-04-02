@@ -3,7 +3,7 @@ description: Megatron job submission for sing
 target:
   service: sing
   # name: msroctobasicvc
-  # name: msrresrchbasicvc
+  # name: quickdevvc
   name: msroctovc
   workspace_name: baltic03wspace
 
@@ -13,12 +13,13 @@ environment:
   registry: msraairgroup.azurecr.io # any public registry can be specified here
   # registry: docker.io # any public registry can be specified here
   setup:
-    - /usr/bin/python -m pip install h5py --user
-    - /usr/bin/python -m pip install transformers --user
-    - /usr/bin/python -m pip install deepspeed --user
-    - /usr/bin/python -m pip install datasets numpy tensorboard jsonlines ujson --user
-    - /usr/bin/python -m pip install wandb --user
-    # - pip install lm_eval --user
+    - pip install h5py --user
+    - pip install transformers --user
+    - pip install deepspeed --user
+    - pip install datasets numpy tensorboard jsonlines ujson --user
+    - pip install wandb --user
+    - pip install lm_eval --user
+    - pip install accelerate --user
     - echo "[Used Python Env]"
     - pip list
     - echo "[Used Disk]"
@@ -45,19 +46,20 @@ storage:
     mount_dir: /mnt/blob-hptrainingwesteurope-pretraining-out
 
 jobs:
-- name: evaluate_dclm_continue_math_regmix_nvidia_test_2
+- name: evaluate_llama_3B_data_evaluation_qinsu_0330_other_test_1
   sku: 1x40G8-A100-NvLink
   # sla_tier: Standard
   sla_tier: Premium
   priority: High
   # reference: https://amulet-docs.azurewebsites.net/main/advanced/51_distributed.html
   command:
-  - sudo mkdir /scratch/source_data
-  - sudo chmod 777 /scratch/source_data
-  - sudo mkdir /scratch/target_data
-  - sudo chmod 777 /scratch/target_data
+  - mkdir /scratch/source_data
+  - chmod 777 /scratch/source_data
+  - mkdir /scratch/target_data
+  - chmod 777 /scratch/target_data
+  - huggingface-cli whoami
   - echo "Start evaluation..."
-  - bash evaluate_dynamic_data_mixing.sh
+  - bash evaluate.sh
   - echo "End training..."
   mpi: False
   process_count_per_node: 1
