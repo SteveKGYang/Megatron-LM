@@ -602,7 +602,7 @@ def main():
         num_fewshot=args.num_fewshot
     )
     
-    print(results)
+    # print(results)
 
     if mpu.is_pipeline_last_stage() and mpu.get_tensor_model_parallel_rank() == 0:
         # print(json.dumps(results, indent=2))
