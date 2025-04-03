@@ -14,7 +14,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_qinsu_0330_tp1_core/
+    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_nvidia_domain_regmix_evaluation_0401_tp1_core/
     # --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_results/llama_3B_data_evaluation_nemotron_HQ_0303_tp1_core/
     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
 )
@@ -22,9 +22,9 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 1
+    --micro-batch-size 2
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_data_evaluation_qinsu_0330_tp1_core_mmlu.json
+    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_nvidia_domain_regmix_evaluation_0401_tp1_core_mmlu.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list boolq
     # --task-list gsm8k,mmlu_pro_math
