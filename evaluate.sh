@@ -24,14 +24,14 @@ INFERENCE_SPECIFIC_ARGS=(
     --hidden-dropout 0.0
     --micro-batch-size 1
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_nvidia_domain_regmix_evaluation_0401_tp1_core_math.json
+    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_nvidia_domain_regmix_evaluation_0401_tp1_core_gsm8k_mmlu_pro_math.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list boolq
-    # --task-list gsm8k,mmlu_pro_math
-    --task-list minerva_math
+    --task-list gsm8k,mmlu_pro_math
+    # --task-list minerva_math
     # --task-list math_continuation
     # --task-list mmlu_continuation,mmlu
-    --num-fewshot 4
+    --num-fewshot 5
     --trust-remote-code
 )
 
