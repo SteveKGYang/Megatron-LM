@@ -22,16 +22,16 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
     --attention-dropout 0.0
     --hidden-dropout 0.0
-    --micro-batch-size 2
+    --micro-batch-size 1
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_nvidia_domain_regmix_evaluation_0401_tp1_core_other.json
-    --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
+    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_nvidia_domain_regmix_evaluation_0401_tp1_core_mmlu.json
+    # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list boolq
     # --task-list gsm8k,mmlu_pro_math
     # --task-list minerva_math,gsm8k
     # --task-list math_continuation
-    # --task-list mmlu_continuation,mmlu
-    --num-fewshot 0
+    --task-list mmlu_continuation,mmlu
+    --num-fewshot 5
     --trust-remote-code
 )
 
