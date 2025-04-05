@@ -40,7 +40,7 @@ INFERENCE_SPECIFIC_ARGS=(
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}
 
-#  /home/aiscuser/.local/bin/accelerate launch evaluate.py \
+# /home/aiscuser/.local/bin/accelerate launch evaluate.py \
 #     ${TOKENIZER_ARGS[@]} \
 #     ${MODEL_ARGS[@]} \
 #     ${INFERENCE_SPECIFIC_ARGS[@]}

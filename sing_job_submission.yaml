@@ -19,6 +19,7 @@ environment:
     - pip install datasets numpy tensorboard jsonlines ujson --user
     - pip install wandb --user
     - pip install lm_eval --user
+    - pip install lm-eval[math]
     - pip install accelerate --user
     - echo "[Used Python Env]"
     - pip list
@@ -46,7 +47,7 @@ storage:
     mount_dir: /mnt/blob-hptrainingwesteurope-pretraining-out
 
 jobs:
-- name: evaluate_llama_3B_data_evaluation_nvidia_domain_regmix_evaluation_other_b2_1
+- name: evaluate_dclm_continue_math_regmix_nvidia_tra_top_1_trajectory_2_dynamic_step_71
   sku: 1x40G8-A100-NvLink
   # sla_tier: Standard
   sla_tier: Premium
@@ -60,7 +61,8 @@ jobs:
   - huggingface-cli whoami
   - echo "Start evaluation..."
   - chmod 777 ./azcopy
-  - bash evaluate.sh
+  # - bash evaluate.sh
+  - bash evaluate_dynamic_data_mixing.sh
   - echo "End training..."
   mpi: False
   process_count_per_node: 1
