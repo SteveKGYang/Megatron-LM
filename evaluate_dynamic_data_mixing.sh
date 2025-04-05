@@ -31,7 +31,7 @@ for model_id in $(seq 0 $(($model_count-1))); do
         IFS='_' read -ra ITERATION <<< "${ckpt_name}"
         cur_iter=$((10#${ITERATION[-1]}))
 
-        ./azcopy copy --recursive "https://hptrainingwesteurope.blob.core.windows.net/pretraining/tuning_result/llama_160m_data_sampling_dclm_math/"$TRAJECTORY_GROUP"/"$TARGET_TRAJECTORY_DIR"/"$ckpt_name"/mp_rank_00/model_optim_rng.pt"$blobkey "/scratch/target_model/$ckpt_name"/mp_rank_00/"
+        ./azcopy copy --recursive "https://hptrainingwesteurope.blob.core.windows.net/pretraining/tuning_result/llama_160m_data_sampling_dclm_math/"$TRAJECTORY_GROUP"/"$TARGET_TRAJECTORY_DIR"/"$ckpt_name"/mp_rank_00/model_optim_rng.pt"$blobkey "/scratch/target_model/$ckpt_name/mp_rank_00/"
         echo $cur_iter > /scratch/target_model/latest_checkpointed_iteration.txt
 
         ls /scratch/target_model
