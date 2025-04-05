@@ -3,7 +3,7 @@ export CUDA_DEVICE_MAX_CONNECTIONS=1
 blobkey="?sv=2023-01-03&st=2025-04-05T07%3A36%3A15Z&se=2025-04-12T07%3A36%3A00Z&skoid=568e5914-ecc1-47fe-b4a8-4007497b49e5&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-04-05T07%3A36%3A15Z&ske=2025-04-12T07%3A36%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=Hrif4bKQwNPd2HM8zAla%2BzBUN5z%2Bqxd61ZKWd3m8%2FR4%3D"
 
 TRAJECTORY_GROUP=top_1
-TARGET_TRAJECTORY_DIR=top_1_trajectory_2_dynamic_step_71
+TARGET_TRAJECTORY_DIR=top_1_trajectory_5_dynamic_step_70
 
 MODEL_DIR=/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_160m_data_sampling_dclm_math/$TRAJECTORY_GROUP/
 
@@ -48,7 +48,7 @@ for model_id in $(seq 0 $(($model_count-1))); do
         INFERENCE_SPECIFIC_ARGS=(
             --attention-dropout 0.0
             --hidden-dropout 0.0
-            --micro-batch-size 8
+            --micro-batch-size 12
             --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160m_data_sampling_dclm_math_tra_eval/$TRAJECTORY_GROUP/$TARGET_TRAJECTORY_DIR/$ckpt_name"_"$model_id"_mmlu_math.json"
             --task-list mmlu_continuation,math_continuation
             --num-fewshot 1
