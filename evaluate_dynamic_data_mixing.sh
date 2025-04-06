@@ -22,6 +22,9 @@ TOKENIZER_ARGS=(
 mkdir /scratch/target_model
 chmod 777 /scratch/target_model
 
+echo $folders
+echo $model_count
+
 for model_id in $(seq 25 $(($model_count-1))); do
 # for model_id in $(seq 0 $((1))); do
     (
