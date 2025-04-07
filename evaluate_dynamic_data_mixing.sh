@@ -3,7 +3,7 @@ export CUDA_DEVICE_MAX_CONNECTIONS=1
 blobkey="?sv=2023-01-03&st=2025-04-05T07%3A36%3A15Z&se=2025-04-12T07%3A36%3A00Z&skoid=568e5914-ecc1-47fe-b4a8-4007497b49e5&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-04-05T07%3A36%3A15Z&ske=2025-04-12T07%3A36%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=Hrif4bKQwNPd2HM8zAla%2BzBUN5z%2Bqxd61ZKWd3m8%2FR4%3D"
 
 TRAJECTORY_GROUP=top_100
-TARGET_TRAJECTORY_DIR=top_100_trajectory_95_dynamic_step_74
+TARGET_TRAJECTORY_DIR=top_100_trajectory_96_dynamic_step_73
 
 MODEL_DIR=/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_160m_data_sampling_dclm_math/$TRAJECTORY_GROUP/
 
