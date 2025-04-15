@@ -3,7 +3,7 @@ export CUDA_DEVICE_MAX_CONNECTIONS=1
 blobkey="?sv=2023-01-03&st=2025-04-11T01%3A44%3A42Z&se=2025-04-18T01%3A44%3A00Z&skoid=568e5914-ecc1-47fe-b4a8-4007497b49e5&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-04-11T01%3A44%3A42Z&ske=2025-04-18T01%3A44%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=jSEOQC8qK8G9n7gl6ByuBb8Aa8wkd5qLQhz8H42uuwM%3D"
 
 TRAJECTORY_GROUP=top_10000
-TARGET_TRAJECTORY_DIR=top_10000_trajectory_86_dynamic_step_78
+TARGET_TRAJECTORY_DIR=top_10000_trajectory_105_dynamic_step_77
 
 MODEL_DIR=/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_160m_data_sampling_dclm_math/$TRAJECTORY_GROUP/
 
@@ -22,7 +22,7 @@ TOKENIZER_ARGS=(
 mkdir /scratch/target_model
 chmod 777 /scratch/target_model
 
-for model_id in $(seq 22 $(($model_count-1))); do
+for model_id in $(seq 21 $(($model_count-1))); do
 # for model_id in $(seq 0 $((1))); do
     (
         cur_ckpt_dir=${folders[$model_id]}
