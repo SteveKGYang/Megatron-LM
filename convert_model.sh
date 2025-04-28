@@ -2,7 +2,7 @@
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 LOAD_DIR='/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/data_agent_0428/'
-TARGET_DIR='/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/data_agent_0428_tp1_core_48000/'
+TARGET_DIR='/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/data_agent_0428_tp1_core_1/'
 
 PATTERN="tokenizer*.json"
 
