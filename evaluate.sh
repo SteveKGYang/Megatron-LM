@@ -14,7 +14,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_nvidia_domain_regmix_evaluation_0401_tp1_core/
+    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/data_agent_0428_tp1_core_1/
     # --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_results/llama_3B_data_evaluation_nemotron_HQ_0303_tp1_core/
     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
 )
@@ -24,14 +24,14 @@ INFERENCE_SPECIFIC_ARGS=(
     --hidden-dropout 0.0
     --micro-batch-size 1
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_nvidia_domain_regmix_evaluation_0401_tp1_core_gsm8k.json
-    # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
+    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/data_agent_0428_tp1_core_1_gsm8k.json
+    --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list boolq
-    --task-list gsm8k
+    # --task-list gsm8k
     # --task-list minerva_math
     # --task-list mmlu_continuation,math_continuation
     # --task-list mmlu_continuation
-    --num-fewshot 5
+    --num-fewshot 0
     --trust-remote-code
 )
 
