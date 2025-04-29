@@ -1,13 +1,14 @@
 #!/bin/bash
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-LOAD_DIR='/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/data_agent_0428/'
-TARGET_DIR='/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/data_agent_0428_tp1_core_1/'
+LOAD_DIR='/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_dclm_0215/'
+TARGET_DIR='/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/llama_3B_data_evaluation_dclm_0215_tp1_legacy/'
 
 PATTERN="tokenizer*.json"
 
 echo "Start converting..."
-python tools/checkpoint/convert.py --loader core --saver core --model-type GPT --position-embedding-type rope --load-dir $LOAD_DIR --save-dir $TARGET_DIR --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
+# python tools/checkpoint/convert.py --loader core --saver core --model-type GPT --position-embedding-type rope --load-dir $LOAD_DIR --save-dir $TARGET_DIR --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
+python tools/checkpoint/convert.py --loader core --saver legacy --model-type GPT --position-embedding-type rope --load-dir $LOAD_DIR --save-dir $TARGET_DIR --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
 # python tools/checkpoint/convert.py --loader core --saver core --model-type GPT --position-embedding-type rope --load-dir $LOAD_DIR --save-dir /scratch/torch_model --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
 # python tools/checkpoint/convert.py --model-type GPT --position-embedding-type rope --load-dir $LOAD_DIR --save-dir /scratch/torch_model --target-tensor-parallel-size 1 --target-pipeline-parallel-size 1 --megatron-path ./
 # python weights_conversion/megatron_to_hf.py --input_dir $LOAD_DIR --num_output_shards 1 --output_dir $TARGET_DIR
