@@ -39,7 +39,7 @@ MODEL_ARGS=(
 INFERENCE_SPECIFIC_ARGS=(
         --attention-dropout 0.0
         --hidden-dropout 0.0
-        --micro-batch-size 4
+        --micro-batch-size 2
         --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_data_evaluation_dclm_0215_tp1_core_data_agent.json
         --task-list mmlu_continuation,math_continuation
         --num-fewshot 1
