@@ -26,13 +26,13 @@ INFERENCE_SPECIFIC_ARGS=(
     --micro-batch-size 1
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
     --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/data_agent_0504_sft_smooth_tp1_core_math.json
-    # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
+    --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list boolq
     # --task-list gsm8k
-    --task-list minerva_math,gsm8k
+    # --task-list minerva_math,gsm8k
     # --task-list mmlu_continuation,math_continuation
     # --task-list mmlu_continuation,mmlu
-    --num-fewshot 4
+    --num-fewshot 0
     --trust-remote-code
 )
 
