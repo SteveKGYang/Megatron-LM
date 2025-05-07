@@ -15,7 +15,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_dclm_0215_tp1_core/
+    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_160M_dclm_data_evaluation_0322/
     # --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/data_agent_0501_epoch_2_smooth_tp1_core/
     # --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_results/llama_3B_data_evaluation_nemotron_HQ_0303_tp1_core/
     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
@@ -41,7 +41,7 @@ INFERENCE_SPECIFIC_ARGS=(
         --attention-dropout 0.0
         --hidden-dropout 0.0
         --micro-batch-size 1
-        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_data_evaluation_dclm_0215_tp1_core_data_agent.json
+        --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_160M_dclm_data_evaluation_0322_data_agent.json
         --task-list mmlu_continuation,math_continuation
         --num-fewshot 1
         --trust-remote-code
