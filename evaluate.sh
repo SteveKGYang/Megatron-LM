@@ -26,9 +26,9 @@ INFERENCE_SPECIFIC_ARGS=(
     --hidden-dropout 0.0
     --micro-batch-size 1
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/data_agent_0504_sft_smooth_tp1_core_arc.json
+    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/data_agent_0504_sft_smooth_tp1_core_winogrande.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-    --task-list arc_easy,arc_challenge
+    --task-list winogrande
     # --task-list gsm8k
     # --task-list minerva_math,gsm8k
     # --task-list mmlu_continuation,math_continuation
