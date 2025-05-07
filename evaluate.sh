@@ -1,5 +1,6 @@
 # export CUDA_VISIBLE_DEVICES=0,1,2,3
 export CUDA_DEVICE_MAX_CONNECTIONS=1
+export NCCL_TIMEOUT=60000
 # alias python='/root/.local/lib/python3.12'
 
 TOKENIZER_ARGS=(
@@ -25,7 +26,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --hidden-dropout 0.0
     --micro-batch-size 1
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/data_agent_0504_sft_smooth_tp1_core_math.json
+    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/data_agent_0504_sft_smooth_tp1_core_other.json
     --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list boolq
     # --task-list gsm8k
