@@ -33,7 +33,7 @@ INFERENCE_SPECIFIC_ARGS=(
     # --task-list minerva_math,gsm8k
     # --task-list mmlu_continuation
     # --task-list mmlu
-    --num-fewshot 4
+    --num-fewshot 0
     --trust-remote-code
 )
 
