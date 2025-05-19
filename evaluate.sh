@@ -28,7 +28,7 @@ INFERENCE_SPECIFIC_ARGS=(
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
     --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/data_agent_0514_sft_2D_corrected_tp1_core_other_1.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
-    --task-list hellaswag,openbookqa,winogrande
+    --task-list arc_easy,arc_challenge,boolq
     # --task-list gsm8k
     # --task-list minerva_math,gsm8k
     # --task-list mmlu_continuation
