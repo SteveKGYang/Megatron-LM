@@ -29,11 +29,11 @@ INFERENCE_SPECIFIC_ARGS=(
     --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_data_evaluation_nemotron_m_continue_math_only_0607_tp1_core_math.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list piqa,sciq,logiqa,lambada
-    --task-list gsm8k,minerva_math
-    # --task-list minerva_math
+    # --task-list gsm8k,minerva_math
+    --task-list mathqa
     # --task-list mmlu_continuation
     # --task-list mmlu
-    --num-fewshot 4
+    --num-fewshot 0
     --trust-remote-code
 )
 
