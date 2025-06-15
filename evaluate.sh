@@ -15,7 +15,7 @@ MODEL_ARGS=(
     --no-load-rng
     --bf16
     --tensor-model-parallel-size 1
-    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_dclm_0215_tp1_core/
+    --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/llama_3B_data_evaluation_nemotron_M_0401_tp1_core/
     # --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_result/data_agent_0501_epoch_2_smooth_tp1_core/
     # --load /mnt/blob-hptrainingwesteurope-pretraining/tuning_results/llama_3B_data_evaluation_nemotron_HQ_0303_tp1_core/
     # --load /mnt/mydata/klyang/olmo2_replicate_0207_format_torch_tp1_core
@@ -26,7 +26,7 @@ INFERENCE_SPECIFIC_ARGS=(
     --hidden-dropout 0.0
     --micro-batch-size 1
     # --results-path /mnt/pvc-blob-nfs/klyang/regmix_results/2.json
-    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_data_evaluation_dclm_0215_tp1_core_mathqa.json
+    --results-path /mnt/blob-hptrainingwesteurope-pretraining-out/evaluation_results/llama_3B_data_evaluation_nemotron_M_0401_tp1_core_mathqa.json
     # --task-list hellaswag,openbookqa,winogrande,arc_easy,arc_challenge,boolq,piqa,sciq,logiqa,lambada
     # --task-list piqa,sciq,logiqa,lambada
     # --task-list gsm8k,minerva_math
