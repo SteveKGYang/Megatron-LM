@@ -1,8 +1,8 @@
 #!/bin/bash
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-LOAD_DIR='/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/data_agent_0611_rl_nvidia_agent_model_corrected/'
-TARGET_DIR='/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/data_agent_0611_rl_nvidia_agent_model_corrected_tp1_core/'
+LOAD_DIR='/mnt/blob-hptrainingwesteurope-pretraining/tuning_result/pythia_continue_math_only_0621/'
+TARGET_DIR='/mnt/blob-hptrainingwesteurope-pretraining-out/tuning_result/pythia_continue_math_only_0621_tp1_core/'
 
 PATTERN="tokenizer*.json"
 
